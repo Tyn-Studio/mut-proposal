@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item active">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Income</h1>
+          <div class="text-secondary" style="font-size: 14px; margin-top: 4px;">Track all income sources and payments</div>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>📅</span>
+            <span>February 2026</span>
+          </button>
+          <button class="btn btn-primary btn-small" onclick="toggleAddIncomeModal()">
+            <span>+</span>
+            <span>Add Income</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Stats Grid -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💰</span>
+              <span>Total Income (YTD)</span>
+            </div>
+            <div class="stat-value">$1.22M</div>
+            <div class="stat-change positive">
+              <span>↑ 18.5%</span>
+              <span class="text-secondary">vs last year</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💵</span>
+              <span>This Month</span>
+            </div>
+            <div class="stat-value">$124,500</div>
+            <div class="progress-bar">
+              <div class="progress-fill success" style="width: 78%;"></div>
+            </div>
+            <div class="text-secondary" style="font-size: 12px; margin-top: 8px;">
+              78% of $160K target
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>⏳</span>
+              <span>Pending Payments</span>
+            </div>
+            <div class="stat-value">$287K</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              12 invoices outstanding
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>📊</span>
+              <span>Avg Payment Time</span>
+            </div>
+            <div class="stat-value">32 days</div>
+            <div class="stat-change positive">
+              <span>↓ 4 days</span>
+              <span class="text-secondary">vs last quarter</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Income by Source Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Income by Source</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <button class="btn btn-ghost btn-small">6 months</button>
+              <button class="btn btn-secondary btn-small">1 year</button>
+              <button class="btn btn-ghost btn-small">All time</button>
+            </div>
+          </div>
+          <div id="incomeChart" style="width: 100%; height: 350px;"></div>
+        </div>
+
+        <!-- Upcoming Income -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Upcoming Income (Next 30 Days)</div>
+            <button class="btn btn-secondary btn-small">
+              <span>📧</span>
+              <span>Send Reminders</span>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Due Date</th>
+                  <th>Client</th>
+                  <th>Project</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Feb 26, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">In 3 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Nike</td>
+                  <td>Spring Campaign 2026</td>
+                  <td><span class="badge badge-accent">Milestone 2</span></td>
+                  <td style="font-weight: 600; color: var(--success);">$45,000</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Mark Paid</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Feb 28, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">In 5 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Coca-Cola</td>
+                  <td>Product Launch Video</td>
+                  <td><span class="badge badge-accent">Final Payment</span></td>
+                  <td style="font-weight: 600; color: var(--success);">$38,500</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Mark Paid</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Mar 5, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">In 12 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Apple</td>
+                  <td>iPhone 18 Commercial</td>
+                  <td><span class="badge badge-accent">Milestone 3</span></td>
+                  <td style="font-weight: 600; color: var(--success);">$52,000</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Mark Paid</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Mar 10, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">In 17 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Samsung</td>
+                  <td>Social Media Package</td>
+                  <td><span class="badge badge-success">Recurring</span></td>
+                  <td style="font-weight: 600; color: var(--success);">$8,500</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Mark Paid</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Income -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Income</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <input type="text" placeholder="Search..." class="form-input" style="width: 200px;">
+              <button class="btn btn-secondary btn-small">
+                <span>🔽</span>
+                <span>Filter</span>
+              </button>
+              <button class="btn btn-secondary btn-small">
+                <span>📊</span>
+                <span>Export</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Client</th>
+                  <th>Project</th>
+                  <th>Type</th>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Payment Method</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div>Feb 22, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">1 day ago</div>
+                  </td>
+                  <td style="font-weight: 600;">Nike</td>
+                  <td>Spring Campaign 2026</td>
+                  <td><span class="badge badge-accent">Milestone</span></td>
+                  <td>Project Payment</td>
+                  <td style="font-weight: 600; color: var(--success);">$45,000</td>
+                  <td>Bank Transfer</td>
+                  <td><span class="badge badge-success">Received</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div>Feb 20, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">3 days ago</div>
+                  </td>
+                  <td style="font-weight: 600;">Amazon</td>
+                  <td>Corporate Documentary</td>
+                  <td><span class="badge badge-accent">Final</span></td>
+                  <td>Project Payment</td>
+                  <td style="font-weight: 600; color: var(--success);">$28,700</td>
+                  <td>Check</td>
+                  <td><span class="badge badge-success">Received</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div>Feb 18, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">5 days ago</div>
+                  </td>
+                  <td style="font-weight: 600;">-</td>
+                  <td>Equipment Rental</td>
+                  <td><span class="badge badge-success">Recurring</span></td>
+                  <td>Equipment Rental</td>
+                  <td style="font-weight: 600; color: var(--success);">$12,500</td>
+                  <td>Bank Transfer</td>
+                  <td><span class="badge badge-success">Received</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div>Feb 15, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">8 days ago</div>
+                  </td>
+                  <td style="font-weight: 600;">Samsung</td>
+                  <td>Social Media Package</td>
+                  <td><span class="badge badge-success">Recurring</span></td>
+                  <td>Project Payment</td>
+                  <td style="font-weight: 600; color: var(--success);">$8,500</td>
+                  <td>Bank Transfer</td>
+                  <td><span class="badge badge-success">Received</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div>Feb 12, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">11 days ago</div>
+                  </td>
+                  <td style="font-weight: 600;">Coca-Cola</td>
+                  <td>Product Launch Video</td>
+                  <td><span class="badge badge-accent">Milestone</span></td>
+                  <td>Project Payment</td>
+                  <td style="font-weight: 600; color: var(--success);">$35,000</td>
+                  <td>Bank Transfer</td>
+                  <td><span class="badge badge-success">Received</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div>Feb 8, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">15 days ago</div>
+                  </td>
+                  <td style="font-weight: 600;">Apple</td>
+                  <td>iPhone 18 Commercial</td>
+                  <td><span class="badge badge-accent">Milestone</span></td>
+                  <td>Project Payment</td>
+                  <td style="font-weight: 600; color: var(--success);">$52,000</td>
+                  <td>Bank Transfer</td>
+                  <td><span class="badge badge-success">Received</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Income Modal -->
+  <div id="addIncomeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: var(--bg-secondary); border: 2px solid var(--border); border-radius: var(--radius-lg); max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; padding: var(--space-xl);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xl); padding-bottom: var(--space-lg); border-bottom: 2px solid var(--border);">
+        <h2 style="font-size: 24px; font-weight: 600; color: var(--text-primary);">Add Income</h2>
+        <button onclick="toggleAddIncomeModal()" style="background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">×</button>
+      </div>
+
+      <form style="display: grid; gap: var(--space-lg);">
+        <div>
+          <label class="form-label">Income Type</label>
+          <select class="form-input">
+            <option>Project Payment</option>
+            <option>Equipment Rental</option>
+            <option>Consulting Fee</option>
+            <option>Other Income</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
+          <div>
+            <label class="form-label">Client</label>
+            <select class="form-input">
+              <option>Select client...</option>
+              <option>Nike</option>
+              <option>Coca-Cola</option>
+              <option>Apple</option>
+              <option>Samsung</option>
+              <option>Amazon</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label">Project (Optional)</label>
+            <select class="form-input">
+              <option>Select project...</option>
+              <option>Spring Campaign 2026</option>
+              <option>Product Launch Video</option>
+              <option>iPhone 18 Commercial</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
+          <div>
+            <label class="form-label">Amount</label>
+            <input type="text" class="form-input" placeholder="$0.00" value="$">
+          </div>
+
+          <div>
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" value="2026-02-23">
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label">Payment Method</label>
+          <select class="form-input">
+            <option>Bank Transfer</option>
+            <option>Check</option>
+            <option>Credit Card</option>
+            <option>PayPal</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label">Category</label>
+          <select class="form-input">
+            <option>Project Payment</option>
+            <option>Equipment Rental</option>
+            <option>Consulting</option>
+            <option>Licensing</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label">Status</label>
+          <div style="display: flex; gap: var(--space-md); margin-top: var(--space-sm);">
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer;">
+              <input type="radio" name="status" value="received" checked>
+              <span>Received</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer;">
+              <input type="radio" name="status" value="pending">
+              <span>Pending</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer;">
+              <input type="radio" name="status" value="scheduled">
+              <span>Scheduled</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label">Notes (Optional)</label>
+          <textarea class="form-input" rows="3" placeholder="Add any additional notes..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: var(--space-md); justify-content: flex-end; margin-top: var(--space-md); padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+          <button type="button" class="btn btn-secondary" onclick="toggleAddIncomeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Income</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleAddIncomeModal() {
+      const modal = document.getElementById('addIncomeModal');
+      if (modal.style.display === 'none' || modal.style.display === '') {
+        modal.style.display = 'flex';
+      } else {
+        modal.style.display = 'none';
+      }
+    }
+
+    // Income Chart
+    (function() {
+      const data = [
+        { month: 'Sep', project: 85000, equipment: 12000, other: 8000 },
+        { month: 'Oct', project: 92000, equipment: 12500, other: 7500 },
+        { month: 'Nov', project: 78000, equipment: 11000, other: 9000 },
+        { month: 'Dec', project: 105000, equipment: 14000, other: 10500 },
+        { month: 'Jan', project: 98000, equipment: 13500, other: 8800 },
+        { month: 'Feb', project: 112000, equipment: 12500, other: 9200 }
+      ];
+
+      const margin = { top: 20, right: 100, bottom: 40, left: 60 };
+      const container = document.getElementById('incomeChart');
+      const width = container.clientWidth;
+      const height = 350;
+
+      const svg = d3.select('#incomeChart')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+      const chartWidth = width - margin.left - margin.right;
+      const chartHeight = height - margin.top - margin.bottom;
+
+      const x = d3.scaleBand()
+        .domain(data.map(d => d.month))
+        .range([0, chartWidth])
+        .padding(0.3);
+
+      const y = d3.scaleLinear()
+        .domain([0, 140000])
+        .range([chartHeight, 0]);
+
+      const stack = d3.stack()
+        .keys(['project', 'equipment', 'other']);
+
+      const series = stack(data);
+
+      const colors = {
+        project: '#667eea',
+        equipment: '#48bb78',
+        other: '#ed8936'
+      };
+
+      // Bars
+      svg.selectAll('.series')
+        .data(series)
+        .enter()
+        .append('g')
+        .attr('class', 'series')
+        .attr('fill', d => colors[d.key])
+        .selectAll('rect')
+        .data(d => d)
+        .enter()
+        .append('rect')
+        .attr('x', d => x(d.data.month))
+        .attr('y', d => y(d[1]))
+        .attr('height', d => y(d[0]) - y(d[1]))
+        .attr('width', x.bandwidth())
+        .attr('rx', 4)
+        .style('opacity', 0.9)
+        .on('mouseenter', function() {
+          d3.select(this).transition().duration(200).style('opacity', 1);
+        })
+        .on('mouseleave', function() {
+          d3.select(this).transition().duration(200).style('opacity', 0.9);
+        });
+
+      // X axis
+      svg.append('g')
+        .attr('transform', `translate(0, ${chartHeight})`)
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+        .style('fill', '#9b9b9b')
+        .style('font-size', '12px');
+
+      // Y axis
+      svg.append('g')
+        .call(d3.axisLeft(y).ticks(5).tickFormat(d => '$' + (d / 1000) + 'K'))
+        .selectAll('text')
+        .style('fill', '#9b9b9b')
+        .style('font-size', '12px');
+
+      svg.selectAll('.domain, .tick line').style('stroke', '#2a2a2a');
+
+      // Legend
+      const legend = svg.append('g')
+        .attr('transform', `translate(${chartWidth + 20}, 0)`);
+
+      const legendData = [
+        { label: 'Project', color: colors.project },
+        { label: 'Equipment', color: colors.equipment },
+        { label: 'Other', color: colors.other }
+      ];
+
+      legendData.forEach((item, i) => {
+        const g = legend.append('g')
+          .attr('transform', `translate(0, ${i * 25})`);
+
+        g.append('rect')
+          .attr('width', 12)
+          .attr('height', 12)
+          .attr('fill', item.color)
+          .attr('rx', 2);
+
+        g.append('text')
+          .attr('x', 18)
+          .attr('y', 10)
+          .text(item.label)
+          .style('font-size', '13px')
+          .style('fill', '#9b9b9b');
+      });
+    })();
+  </script>
+</body>
+</html>

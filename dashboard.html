@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item active">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Dashboard</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>📅</span>
+            <span>February 2026</span>
+          </button>
+          <button class="btn btn-primary btn-small">
+            <span>+</span>
+            <span>New Project</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💵</span>
+              <span>Current Month Revenue</span>
+            </div>
+            <div class="stat-value">$124,500</div>
+            <div class="stat-change positive">
+              <span>↑ 12.5%</span>
+              <span class="text-secondary">vs last month</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill success" style="width: 78%;"></div>
+            </div>
+            <div class="text-secondary" style="font-size: 12px; margin-top: 8px;">
+              $124,500 of $160,000 target
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💳</span>
+              <span>Current Month Expenses</span>
+            </div>
+            <div class="stat-value">$67,200</div>
+            <div class="stat-change negative">
+              <span>↑ 8.3%</span>
+              <span class="text-secondary">vs last month</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill warning" style="width: 84%;"></div>
+            </div>
+            <div class="text-secondary" style="font-size: 12px; margin-top: 8px;">
+              $67,200 of $80,000 budget
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>📊</span>
+              <span>Net Profit (This Month)</span>
+            </div>
+            <div class="stat-value">$57,300</div>
+            <div class="stat-change positive">
+              <span>↑ 18.2%</span>
+              <span class="text-secondary">vs last month</span>
+            </div>
+            <div class="text-secondary" style="font-size: 14px; margin-top: 12px;">
+              Margin: <span class="text-success">46%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>🎯</span>
+              <span>Pipeline Value</span>
+            </div>
+            <div class="stat-value">$412,000</div>
+            <div class="stat-change neutral">
+              <span>6 proposals</span>
+              <span class="text-secondary">pending approval</span>
+            </div>
+            <div class="text-secondary" style="font-size: 14px; margin-top: 12px;">
+              Expected close: <span class="text-warning">~$247,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid-2 mb-xl">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Revenue & Expenses Trend</div>
+                <div class="card-subtitle">Last 6 months</div>
+              </div>
+            </div>
+            <div class="chart-container" id="revenue-chart"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Project Distribution</div>
+                <div class="card-subtitle">By service type (current year)</div>
+              </div>
+            </div>
+            <div class="chart-container" id="project-chart"></div>
+          </div>
+        </div>
+
+        <!-- Active Projects & Pipeline -->
+        <div class="grid-2 mb-xl">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Active Projects</div>
+              <a href="projects.html" class="btn btn-ghost btn-small">View all</a>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Project</th>
+                    <th>Client</th>
+                    <th>Value</th>
+                    <th>Progress</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nike Campaign 2026</td>
+                    <td>Nike Inc.</td>
+                    <td>$45,000</td>
+                    <td>
+                      <div class="flex items-center gap-sm">
+                        <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                          <div style="width: 65%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                        </div>
+                        <span class="text-secondary" style="font-size: 12px;">65%</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Adidas Product Launch</td>
+                    <td>Adidas</td>
+                    <td>$32,000</td>
+                    <td>
+                      <div class="flex items-center gap-sm">
+                        <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                          <div style="width: 40%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                        </div>
+                        <span class="text-secondary" style="font-size: 12px;">40%</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Coca-Cola Social Media</td>
+                    <td>Coca-Cola</td>
+                    <td>$28,500</td>
+                    <td>
+                      <div class="flex items-center gap-sm">
+                        <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                          <div style="width: 85%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                        </div>
+                        <span class="text-secondary" style="font-size: 12px;">85%</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>BMW Event Coverage</td>
+                    <td>BMW</td>
+                    <td>$52,000</td>
+                    <td>
+                      <div class="flex items-center gap-sm">
+                        <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                          <div style="width: 20%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                        </div>
+                        <span class="text-secondary" style="font-size: 12px;">20%</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Pending Proposals</div>
+              <a href="projects.html" class="btn btn-ghost btn-small">View all</a>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Project</th>
+                    <th>Client</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sony Product Video</td>
+                    <td>Sony</td>
+                    <td>$75,000</td>
+                    <td><span class="badge badge-warning">Under Review</span></td>
+                  </tr>
+                  <tr>
+                    <td>Apple Store Opening</td>
+                    <td>Apple</td>
+                    <td>$125,000</td>
+                    <td><span class="badge badge-accent">Negotiating</span></td>
+                  </tr>
+                  <tr>
+                    <td>Samsung Campaign</td>
+                    <td>Samsung</td>
+                    <td>$68,000</td>
+                    <td><span class="badge badge-warning">Under Review</span></td>
+                  </tr>
+                  <tr>
+                    <td>Netflix Series Promo</td>
+                    <td>Netflix</td>
+                    <td>$92,000</td>
+                    <td><span class="badge badge-accent">Negotiating</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Area Budget Status -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Area Budget Status (2026)</div>
+            <button class="btn btn-ghost btn-small">View Details</button>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>Annual Budget</th>
+                  <th>Spent YTD</th>
+                  <th>Remaining</th>
+                  <th>Status</th>
+                  <th style="width: 200px;">Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Production</strong></td>
+                  <td>$240,000</td>
+                  <td>$48,500</td>
+                  <td>$191,500</td>
+                  <td><span class="badge badge-success">On Track</span></td>
+                  <td>
+                    <div style="height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                      <div style="width: 20%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Marketing</strong></td>
+                  <td>$120,000</td>
+                  <td>$28,400</td>
+                  <td>$91,600</td>
+                  <td><span class="badge badge-success">On Track</span></td>
+                  <td>
+                    <div style="height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                      <div style="width: 24%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Creative Direction</strong></td>
+                  <td>$180,000</td>
+                  <td>$42,100</td>
+                  <td>$137,900</td>
+                  <td><span class="badge badge-success">On Track</span></td>
+                  <td>
+                    <div style="height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                      <div style="width: 23%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Administration</strong></td>
+                  <td>$160,000</td>
+                  <td>$35,800</td>
+                  <td>$124,200</td>
+                  <td><span class="badge badge-warning">Monitor</span></td>
+                  <td>
+                    <div style="height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                      <div style="width: 22%; height: 100%; background: var(--warning); border-radius: 3px;"></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Revenue & Expenses Chart
+    const revenueData = [
+      { month: 'Sep', revenue: 98000, expenses: 52000 },
+      { month: 'Oct', revenue: 112000, expenses: 58000 },
+      { month: 'Nov', revenue: 105000, expenses: 61000 },
+      { month: 'Dec', revenue: 95000, expenses: 55000 },
+      { month: 'Jan', revenue: 111000, expenses: 62000 },
+      { month: 'Feb', revenue: 124500, expenses: 67200 }
+    ];
+
+    const margin = { top: 20, right: 20, bottom: 40, left: 60 };
+    const width = 500 - margin.left - margin.right;
+    const height = 260 - margin.top - margin.bottom;
+
+    const svg = d3.select('#revenue-chart')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', 300)
+      .attr('viewBox', `0 0 500 300`)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleBand()
+      .domain(revenueData.map(d => d.month))
+      .range([0, width])
+      .padding(0.3);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(revenueData, d => Math.max(d.revenue, d.expenses)) * 1.1])
+      .range([height, 0]);
+
+    // X Axis
+    svg.append('g')
+      .attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(x))
+      .selectAll('text')
+      .style('fill', '#9b9b9b')
+      .style('font-size', '12px');
+
+    svg.selectAll('.domain, .tick line')
+      .style('stroke', '#333333');
+
+    // Y Axis
+    svg.append('g')
+      .call(d3.axisLeft(y).ticks(5).tickFormat(d => '$' + (d / 1000) + 'k'))
+      .selectAll('text')
+      .style('fill', '#9b9b9b')
+      .style('font-size', '12px');
+
+    // Tooltip
+    const tooltip = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('background', '#2a2a2a')
+      .style('border', '1px solid #333333')
+      .style('border-radius', '8px')
+      .style('padding', '12px')
+      .style('color', '#e6e6e6')
+      .style('font-size', '13px')
+      .style('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('z-index', 1000)
+      .style('box-shadow', '0 4px 6px rgba(0, 0, 0, 0.4)');
+
+    // Revenue bars
+    svg.selectAll('.bar-revenue')
+      .data(revenueData)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar-revenue')
+      .attr('x', d => x(d.month))
+      .attr('y', height)
+      .attr('width', x.bandwidth() / 2)
+      .attr('height', 0)
+      .attr('fill', '#6366f1')
+      .attr('rx', 3)
+      .style('cursor', 'pointer')
+      .on('mouseenter', function(event, d) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('fill', '#7c7ef5')
+          .attr('transform', 'translate(0, -2)');
+
+        tooltip
+          .style('opacity', 1)
+          .html(`<strong>${d.month} Revenue</strong><br/>$${d.revenue.toLocaleString()}<br/><span style="color: #10b981">▲ ${((d.revenue - d.expenses) / d.expenses * 100).toFixed(1)}% net</span>`);
+      })
+      .on('mousemove', function(event) {
+        tooltip
+          .style('left', (event.pageX + 15) + 'px')
+          .style('top', (event.pageY - 15) + 'px');
+      })
+      .on('mouseleave', function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('fill', '#6366f1')
+          .attr('transform', 'translate(0, 0)');
+
+        tooltip.style('opacity', 0);
+      })
+      .transition()
+      .duration(800)
+      .delay((d, i) => i * 100)
+      .attr('y', d => y(d.revenue))
+      .attr('height', d => height - y(d.revenue));
+
+    // Expense bars
+    svg.selectAll('.bar-expense')
+      .data(revenueData)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar-expense')
+      .attr('x', d => x(d.month) + x.bandwidth() / 2)
+      .attr('y', height)
+      .attr('width', x.bandwidth() / 2)
+      .attr('height', 0)
+      .attr('fill', '#ef4444')
+      .attr('rx', 3)
+      .style('cursor', 'pointer')
+      .on('mouseenter', function(event, d) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('fill', '#f56565')
+          .attr('transform', 'translate(0, -2)');
+
+        tooltip
+          .style('opacity', 1)
+          .html(`<strong>${d.month} Expenses</strong><br/>$${d.expenses.toLocaleString()}<br/><span style="color: #9b9b9b">Profit: $${(d.revenue - d.expenses).toLocaleString()}</span>`);
+      })
+      .on('mousemove', function(event) {
+        tooltip
+          .style('left', (event.pageX + 15) + 'px')
+          .style('top', (event.pageY - 15) + 'px');
+      })
+      .on('mouseleave', function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('fill', '#ef4444')
+          .attr('transform', 'translate(0, 0)');
+
+        tooltip.style('opacity', 0);
+      })
+      .transition()
+      .duration(800)
+      .delay((d, i) => i * 100)
+      .attr('y', d => y(d.expenses))
+      .attr('height', d => height - y(d.expenses));
+
+    // Legend
+    const legend = svg.append('g')
+      .attr('transform', `translate(${width - 150}, 0)`);
+
+    legend.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 12)
+      .attr('height', 12)
+      .attr('fill', '#6366f1')
+      .attr('rx', 2);
+
+    legend.append('text')
+      .attr('x', 18)
+      .attr('y', 10)
+      .text('Revenue')
+      .style('fill', '#e6e6e6')
+      .style('font-size', '12px');
+
+    legend.append('rect')
+      .attr('x', 80)
+      .attr('y', 0)
+      .attr('width', 12)
+      .attr('height', 12)
+      .attr('fill', '#ef4444')
+      .attr('rx', 2);
+
+    legend.append('text')
+      .attr('x', 98)
+      .attr('y', 10)
+      .text('Expenses')
+      .style('fill', '#e6e6e6')
+      .style('font-size', '12px');
+
+    // Project Distribution Donut Chart
+    const projectData = [
+      { type: 'Video Production', value: 45, color: '#6366f1' },
+      { type: 'Advertising', value: 30, color: '#10b981' },
+      { type: 'Equipment Rental', value: 15, color: '#f59e0b' },
+      { type: 'Photography', value: 10, color: '#ef4444' }
+    ];
+
+    const donutWidth = 500;
+    const donutHeight = 300;
+    const radius = Math.min(donutWidth, donutHeight) / 2 - 40;
+
+    const donutSvg = d3.select('#project-chart')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', 300)
+      .attr('viewBox', `0 0 ${donutWidth} ${donutHeight}`)
+      .append('g')
+      .attr('transform', `translate(${donutWidth / 2},${donutHeight / 2})`);
+
+    const pie = d3.pie()
+      .value(d => d.value)
+      .sort(null);
+
+    const arc = d3.arc()
+      .innerRadius(radius * 0.6)
+      .outerRadius(radius);
+
+    const arcHover = d3.arc()
+      .innerRadius(radius * 0.6)
+      .outerRadius(radius * 1.05);
+
+    const arcs = donutSvg.selectAll('arc')
+      .data(pie(projectData))
+      .enter()
+      .append('g');
+
+    arcs.append('path')
+      .attr('d', arc)
+      .attr('fill', d => d.data.color)
+      .attr('stroke', '#191919')
+      .attr('stroke-width', 2)
+      .style('cursor', 'pointer')
+      .on('mouseenter', function(event, d) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('d', arcHover)
+          .attr('opacity', 0.9);
+
+        tooltip
+          .style('opacity', 1)
+          .html(`<strong>${d.data.type}</strong><br/>${d.data.value}% of projects<br/><span style="color: #9b9b9b">Click for details</span>`);
+      })
+      .on('mousemove', function(event) {
+        tooltip
+          .style('left', (event.pageX + 15) + 'px')
+          .style('top', (event.pageY - 15) + 'px');
+      })
+      .on('mouseleave', function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('d', arc)
+          .attr('opacity', 1);
+
+        tooltip.style('opacity', 0);
+      })
+      .on('click', function(event, d) {
+        alert(`Filter projects by: ${d.data.type}`);
+      })
+      .transition()
+      .duration(800)
+      .attrTween('d', function(d) {
+        const interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+        return function(t) {
+          return arc(interpolate(t));
+        };
+      });
+
+    // Legend for donut
+    const donutLegend = donutSvg.append('g')
+      .attr('transform', `translate(${radius + 40}, ${-radius + 20})`);
+
+    projectData.forEach((d, i) => {
+      const legendRow = donutLegend.append('g')
+        .attr('transform', `translate(0, ${i * 25})`)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function() {
+          d3.select(this).select('text').style('fill', '#ffffff');
+        })
+        .on('mouseleave', function() {
+          d3.select(this).select('text').style('fill', '#e6e6e6');
+        });
+
+      legendRow.append('rect')
+        .attr('width', 12)
+        .attr('height', 12)
+        .attr('fill', d.color)
+        .attr('rx', 2);
+
+      legendRow.append('text')
+        .attr('x', 18)
+        .attr('y', 10)
+        .text(`${d.type} (${d.value}%)`)
+        .style('fill', '#e6e6e6')
+        .style('font-size', '12px')
+        .style('transition', 'fill 0.2s');
+    });
+  </script>
+</body>
+</html>

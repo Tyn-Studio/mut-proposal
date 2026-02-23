@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUT Financial Platform - Pitch</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .pitch-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--space-xl);
+    }
+
+    .pitch-hero {
+      text-align: center;
+      padding: 140px var(--space-xl) 100px;
+      margin-bottom: 140px;
+      background: var(--bg-primary);
+    }
+
+    .pitch-hero h1 {
+      font-size: 64px;
+      font-weight: 200;
+      margin-bottom: var(--space-xl);
+      color: var(--text-primary);
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+
+    .pitch-hero .subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pitch-hero .tagline {
+      font-size: 15px;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-bottom: var(--space-xl);
+      font-weight: 300;
+    }
+
+    .pitch-section {
+      margin-bottom: 120px;
+    }
+
+    .pitch-section-title {
+      font-size: 36px;
+      font-weight: 200;
+      margin-bottom: var(--space-xl);
+      color: var(--text-primary);
+      letter-spacing: -1px;
+    }
+
+    .pitch-section-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      font-weight: 300;
+      line-height: 1.9;
+      max-width: 700px;
+    }
+
+    .simple-grid {
+      display: grid;
+      gap: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+
+    .simple-item {
+      padding: var(--space-xl);
+      border-left: 2px solid var(--border);
+      background: transparent;
+    }
+
+    .simple-item-title {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: var(--space-md);
+      color: var(--text-primary);
+    }
+
+    .simple-item-text {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .highlight-box {
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin-top: 60px;
+      margin-bottom: 60px;
+    }
+
+    .highlight-box h3 {
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: var(--space-lg);
+      letter-spacing: -0.5px;
+    }
+
+    .highlight-box p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .investment-grid {
+      display: grid;
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .investment-item {
+      padding: var(--space-lg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-tertiary);
+    }
+
+    .investment-label {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .investment-value {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .timeline-box {
+      background: transparent;
+      border-left: 2px solid var(--accent);
+      padding-left: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+
+    .timeline-item {
+      margin-bottom: var(--space-xl);
+      position: relative;
+    }
+
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: calc(var(--space-xl) * -1 - 6px);
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .timeline-phase {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .timeline-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .vision-box {
+      background: var(--bg-secondary);
+      border: 2px solid var(--success);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin-top: var(--space-xl);
+    }
+
+    .vision-box h3 {
+      color: var(--success);
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: var(--space-lg);
+      text-align: center;
+      letter-spacing: -0.5px;
+    }
+
+    .vision-list {
+      list-style: none;
+      padding: 0;
+      margin-top: var(--space-lg);
+    }
+
+    .vision-list li {
+      padding: var(--space-md) 0;
+      padding-left: var(--space-xl);
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+      font-size: 15px;
+    }
+
+    .vision-list li:before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-size: 18px;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 80px var(--space-xl);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-lg);
+      background: transparent;
+      margin-top: 100px;
+      margin-bottom: 80px;
+    }
+
+    .cta-section h2 {
+      font-size: 36px;
+      font-weight: 200;
+      margin-bottom: var(--space-lg);
+      color: var(--text-primary);
+      letter-spacing: -1px;
+    }
+
+    .cta-section p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: var(--space-xl);
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .mockup-link {
+      padding: var(--space-xl);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: transparent;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      display: block;
+      text-align: center;
+    }
+
+    .mockup-link:hover {
+      border-color: var(--accent);
+      background: var(--bg-secondary);
+    }
+
+    .mockup-link-icon {
+      font-size: 32px;
+      margin-bottom: var(--space-md);
+    }
+
+    .mockup-link-title {
+      font-weight: 400;
+      margin-bottom: var(--space-sm);
+      font-size: 16px;
+    }
+
+    .mockup-link-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin-top: var(--space-lg);
+    }
+
+    .bullet-list li {
+      padding: var(--space-sm) 0;
+      padding-left: var(--space-lg);
+      position: relative;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .bullet-list li:before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .why-custom {
+      background: var(--bg-tertiary);
+      border: 2px solid var(--warning);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+
+    .why-custom h4 {
+      color: var(--warning);
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: var(--space-md);
+    }
+
+    .why-custom p {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-md);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body style="background: var(--bg-primary);">
+  <div class="pitch-container">
+    <!-- Hero Section -->
+    <div class="pitch-hero">
+      <img src="../Mut.avif" alt="MUT Logo" style="height: 50px; width: auto; max-width: 200px; object-fit: contain; margin-bottom: var(--space-xl); opacity: 0.9;">
+      <h1>Transform Your<br>Financial Management</h1>
+      <p class="subtitle">A custom platform designed specifically for MUT's production workflows, budgets, and cash flow forecasting needs.</p>
+      <p class="tagline">built by a calm studio for bold ideas</p>
+      <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap; margin-top: 48px;">
+        <a href="#solution" class="btn btn-primary">See the Solution</a>
+        <a href="#mockups" class="btn btn-secondary">Explore Platform</a>
+      </div>
+    </div>
+
+    <!-- The Challenge -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">The Challenge</h2>
+      <p class="pitch-section-subtitle">MUT has outgrown spreadsheets. Your business needs real-time financial visibility that Google Sheets can't provide.</p>
+
+      <div class="simple-grid">
+        <div class="simple-item">
+          <div class="simple-item-title">Real-Time Visibility</div>
+          <div class="simple-item-text">See instantly how prospective projects will impact your bottom line over the next 3, 6, or 12 months. No more manual updates or outdated projections.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Collaborative Workflows</div>
+          <div class="simple-item-text">CEO, administration, creative, marketing, and production teams all need different views of the same financial data. Everyone should work from one source of truth.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Intelligent Forecasting</div>
+          <div class="simple-item-text">Answer critical questions like "What if we land these 3 projects?" with scenario planning that shows you the financial future before it happens.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Project-to-Revenue Tracking</div>
+          <div class="simple-item-text">Connect creative work to financial outcomes. Track projects from proposal through execution to final payment with complete budget visibility.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Solution -->
+    <div class="pitch-section" id="solution">
+      <h2 class="pitch-section-title">The Solution</h2>
+      <p class="pitch-section-subtitle">A custom financial platform built specifically for MUT's project-based creative business model.</p>
+
+      <div class="simple-grid">
+        <div class="simple-item">
+          <div class="simple-item-title">Smart Project Management</div>
+          <div class="simple-item-text">Create budgets for potential projects, track stages from pitch to completion, convert approved budgets into income schedules automatically, and monitor actual vs projected costs in real-time.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Financial Intelligence</div>
+          <div class="simple-item-text">See how pending projects impact cash flow over the next 6-12 months. Compare projected vs actual revenue and expenses. Analyze profitability by project, client, or service type with customized dashboards by role.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Area-Based Budgeting</div>
+          <div class="simple-item-text">Each department maintains their annual budget independently. Track expenses against budget by area with approval workflows for changes and shared visibility with appropriate permissions.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Recurring & One-Time Transactions</div>
+          <div class="simple-item-text">Equipment rental income, rent and salaries, subscriptions, project-based income with flexible payment schedules, and one-time costs like equipment purchases all flow into one coherent view.</div>
+        </div>
+      </div>
+
+      <!-- Why Custom -->
+      <div class="why-custom">
+        <h4>Why Custom vs Off-the-Shelf?</h4>
+        <p>Generic accounting software doesn't understand how creative production companies work:</p>
+        <ul class="bullet-list">
+          <li>Project workflows from proposals to execution to payments</li>
+          <li>Equipment rental business models</li>
+          <li>Multi-month project timelines with variable payment schedules</li>
+          <li>The need to forecast "what if we land these projects?"</li>
+          <li>Area-based budgeting for collaborative creative teams</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- The Investment -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">The Investment</h2>
+      <p class="pitch-section-subtitle">A retention-based partnership model that aligns our success with yours.</p>
+
+      <div class="highlight-box">
+        <h3>Monthly Retention Model</h3>
+        <p style="text-align: center; margin-bottom: var(--space-xl);">
+          We build alongside you, learning your workflows and delivering value incrementally. No big upfront cost, no surprise bills.
+        </p>
+
+        <div class="investment-grid">
+          <div class="investment-item">
+            <div class="investment-label">Timeline</div>
+            <div class="investment-value">
+              6-10 months of iterative development, delivering working features regularly so you see value quickly.
+            </div>
+          </div>
+
+          <div class="investment-item">
+            <div class="investment-label">Development Model</div>
+            <div class="investment-value">
+              Monthly retention includes platform development, regular releases, your feedback shapes the product, and ongoing support throughout the process.
+            </div>
+          </div>
+
+          <div class="investment-item">
+            <div class="investment-label">What You Get</div>
+            <div class="investment-value">
+              Custom platform built for MUT's specific workflows, training and documentation for your team, continuous iteration based on real usage, and a system that grows with your business.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Development Roadmap -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">Development Roadmap</h2>
+      <p class="pitch-section-subtitle">Phased approach delivering value at each milestone.</p>
+
+      <div class="timeline-box">
+        <div class="timeline-item">
+          <div class="timeline-phase">Phase 1: Core MVP (Months 1-4)</div>
+          <div class="timeline-desc">Dashboard with key metrics, project management and budget creation, basic cash flow forecasting, recurring transactions and expenses. Deploy for daily use by your team.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-phase">Phase 2: Advanced Features (Months 5-7)</div>
+          <div class="timeline-desc">Area-based budgeting with permissions, detailed financial reporting and analytics, invoice generation, mobile optimization. Refine based on team feedback.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-phase">Phase 3: Integration & Polish (Months 8-10)</div>
+          <div class="timeline-desc">Integration with existing tools, advanced scenario planning, custom reports and exports, performance optimization and final polish.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-phase">Beyond Launch</div>
+          <div class="timeline-desc">Ongoing support and maintenance, feature additions based on evolving needs, continuous improvement and optimization.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Vision -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">The Vision</h2>
+      <p class="pitch-section-subtitle">Imagine your financial operations running smoothly.</p>
+
+      <div class="vision-box">
+        <h3>A day at MUT with the platform</h3>
+        <ul class="vision-list">
+          <li>The CEO checks the dashboard Monday morning and sees complete financial health at a glance</li>
+          <li>A producer closes a deal and updates the system from their phone—income schedules generate automatically</li>
+          <li>The creative director reviews area budgets in real-time, adjusting allocations for upcoming projects</li>
+          <li>Administration doesn't chase expense reports—everything flows into the system automatically</li>
+          <li>Everyone knows: Are we hitting our targets? What's coming? Where should we focus?</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 60px; padding: var(--space-xl); border-left: 2px solid var(--success);">
+        <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.8; font-weight: 300; font-style: italic;">
+          "Move from managing spreadsheets to managing growth. Replace manual updates with automated insights. Transform financial chaos into strategic clarity."
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive Mockups -->
+    <div class="pitch-section" id="mockups">
+      <h2 class="pitch-section-title">Explore the Platform</h2>
+      <p class="pitch-section-subtitle">Interactive mockups showing the core features and workflows</p>
+
+      <div class="mockup-grid">
+        <a href="dashboard.html" class="mockup-link">
+          <div class="mockup-link-icon">📊</div>
+          <div class="mockup-link-title">Dashboard</div>
+          <div class="mockup-link-desc">Financial overview with real-time metrics and interactive charts</div>
+        </a>
+
+        <a href="cash-flow.html" class="mockup-link">
+          <div class="mockup-link-icon">📈</div>
+          <div class="mockup-link-title">Cash Flow Forecast</div>
+          <div class="mockup-link-desc">6-month projections with scenario planning</div>
+        </a>
+
+        <a href="projects.html" class="mockup-link">
+          <div class="mockup-link-icon">🎬</div>
+          <div class="mockup-link-title">Projects</div>
+          <div class="mockup-link-desc">Complete project list with status and profitability</div>
+        </a>
+
+        <a href="project-detail.html" class="mockup-link">
+          <div class="mockup-link-icon">📋</div>
+          <div class="mockup-link-title">Project Detail</div>
+          <div class="mockup-link-desc">Income schedule, budget breakdown, and tracking</div>
+        </a>
+
+        <a href="project-create.html" class="mockup-link">
+          <div class="mockup-link-icon">✨</div>
+          <div class="mockup-link-title">Create Budget</div>
+          <div class="mockup-link-desc">Step-by-step budget builder with profit calculator</div>
+        </a>
+
+        <a href="recurring-expenses.html" class="mockup-link">
+          <div class="mockup-link-icon">💳</div>
+          <div class="mockup-link-title">Recurring Expenses</div>
+          <div class="mockup-link-desc">Manage salaries, subscriptions, and operational costs</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Partnership Opportunity -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">Beyond MUT: Partnership Opportunity</h2>
+      <p class="pitch-section-subtitle">Once we build the perfect platform for MUT, we can leverage it together into a product for the creative industry.</p>
+
+      <div class="highlight-box">
+        <h3>MUT + Tyn Studio</h3>
+        <p style="text-align: center; margin-bottom: var(--space-xl);">
+          Transform from custom development into a product partnership
+        </p>
+
+        <div class="simple-grid" style="margin-top: var(--space-xl);">
+          <div class="simple-item" style="border-left-color: var(--accent); padding-left: var(--space-lg);">
+            <div class="simple-item-title">Phase 1: Build for MUT</div>
+            <div class="simple-item-text">Tyn Studio develops the platform with monthly retention. MUT gets a custom financial command center built specifically for their workflows.</div>
+          </div>
+
+          <div class="simple-item" style="border-left-color: var(--success); padding-left: var(--space-lg);">
+            <div class="simple-item-title">Phase 2: Prove the Value</div>
+            <div class="simple-item-text">MUT uses the platform daily, validating features and workflows. We refine based on real production company needs, not guesses.</div>
+          </div>
+
+          <div class="simple-item" style="border-left-color: var(--warning); padding-left: var(--space-lg);">
+            <div class="simple-item-title">Phase 3: Partnership Launch</div>
+            <div class="simple-item-text">Together, we adapt the platform for multi-tenant use and offer it to other creative agencies, freelancers, and production companies.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 60px; padding: var(--space-xl); border: 2px solid var(--success); border-radius: var(--radius-lg); background: var(--bg-secondary);">
+        <h4 style="color: var(--success); font-size: 20px; font-weight: 400; margin-bottom: var(--space-lg);">What Each Partner Brings</h4>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-top: var(--space-lg);">
+          <div>
+            <div style="font-size: 16px; font-weight: 400; color: var(--text-primary); margin-bottom: var(--space-sm);">Tyn Studio</div>
+            <ul class="bullet-list" style="margin-top: var(--space-sm);">
+              <li>Platform development and maintenance</li>
+              <li>Product design and UX expertise</li>
+              <li>Technical infrastructure and hosting</li>
+              <li>Software development methodology</li>
+            </ul>
+          </div>
+
+          <div>
+            <div style="font-size: 16px; font-weight: 400; color: var(--text-primary); margin-bottom: var(--space-sm);">MUT</div>
+            <ul class="bullet-list" style="margin-top: var(--space-sm);">
+              <li>Deep domain expertise in production workflows</li>
+              <li>Real-world validation and feedback</li>
+              <li>Industry connections and credibility</li>
+              <li>Go-to-market access to creative networks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Market Opportunity -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">Market Opportunity</h2>
+      <p class="pitch-section-subtitle">The creative industry is massive, growing, and desperately underserved by financial software.</p>
+
+      <div class="vision-box" style="border-color: var(--accent);">
+        <h3 style="color: var(--accent);">Target Customers</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-top: var(--space-xl);">
+          <div style="text-align: center; padding: var(--space-lg); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-tertiary);">
+            <div style="font-size: 36px; font-weight: 300; color: var(--accent); margin-bottom: var(--space-sm);">200K+</div>
+            <div style="font-size: 13px; color: var(--text-secondary); font-weight: 300;">Creative agencies in North America</div>
+          </div>
+          <div style="text-align: center; padding: var(--space-lg); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-tertiary);">
+            <div style="font-size: 36px; font-weight: 300; color: var(--accent); margin-bottom: var(--space-sm);">2M+</div>
+            <div style="font-size: 13px; color: var(--text-secondary); font-weight: 300;">Freelancers and small studios</div>
+          </div>
+          <div style="text-align: center; padding: var(--space-lg); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-tertiary);">
+            <div style="font-size: 36px; font-weight: 300; color: var(--accent); margin-bottom: var(--space-sm);">$150B+</div>
+            <div style="font-size: 13px; color: var(--text-secondary); font-weight: 300;">Annual creative services revenue</div>
+          </div>
+        </div>
+
+        <ul class="bullet-list" style="margin-top: 40px;">
+          <li>Film and video production companies</li>
+          <li>Advertising and marketing agencies</li>
+          <li>Design studios and creative consultancies</li>
+          <li>Photography and post-production studios</li>
+          <li>Event production and experiential agencies</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 40px; padding: var(--space-xl); border-left: 2px solid var(--accent); background: transparent;">
+        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; font-weight: 300;">
+          These businesses all face the same challenge MUT does: project-based revenue, complex payment schedules, multi-area budgeting, and the need to forecast "what if we land these projects?" Generic accounting software doesn't work for them either.
+        </p>
+      </div>
+    </div>
+
+    <!-- Go-to-Market Strategy -->
+    <div class="pitch-section">
+      <h2 class="pitch-section-title">Go-to-Market Strategy</h2>
+      <p class="pitch-section-subtitle">Leveraging MUT's story and network to reach the creative industry.</p>
+
+      <div class="simple-grid">
+        <div class="simple-item">
+          <div class="simple-item-title">Product Positioning</div>
+          <div class="simple-item-text">"Built by a production company that needed it." MUT's story becomes the most powerful marketing: a real agency that built their financial command center and now shares it with others.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Beta Launch</div>
+          <div class="simple-item-text">Start with 5-10 agencies from MUT's network. Early adopter pricing in exchange for testimonials and case studies. Learn from real users before broader launch.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Revenue Model</div>
+          <div class="simple-item-text">SaaS subscription: $200-500/month based on team size and features. Annual contracts for agencies, monthly for freelancers. Revenue split between Tyn Studio and MUT.</div>
+        </div>
+
+        <div class="simple-item">
+          <div class="simple-item-title">Sales & Marketing</div>
+          <div class="simple-item-text">Content marketing showing MUT's transformation, industry events and production conferences, partnerships with creative associations, direct outreach to agencies struggling with spreadsheets.</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 60px; padding: var(--space-xl); border: 1px solid var(--border); border-radius: var(--radius-lg); background: transparent;">
+        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; font-weight: 300; margin-bottom: var(--space-md);">
+          <strong style="color: var(--text-primary);">The Partnership Advantage:</strong> This isn't just another SaaS product built by developers who don't understand the industry. It's software built by creatives, for creatives, validated by a real production company.
+        </p>
+        <p style="font-size: 14px; color: var(--text-tertiary); font-style: italic; font-weight: 300;">
+          MUT brings credibility and access. Tyn Studio brings technical execution. Together, you serve an underserved market.
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>Let's build something exceptional</h2>
+      <p>Start with transforming MUT's financial operations.<br>Evolve into serving the entire creative industry together.</p>
+      <div style="margin-top: var(--space-lg); margin-bottom: var(--space-xl); padding: var(--space-lg); border-left: 2px solid var(--accent); text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.8; font-weight: 300;">
+          <strong style="color: var(--text-primary);">First:</strong> We build your platform with monthly retention.<br>
+          <strong style="color: var(--text-primary);">Then:</strong> We explore partnership opportunities to share it with others.<br>
+          <strong style="color: var(--text-primary);">Result:</strong> MUT gets exactly what they need, plus potential ongoing revenue from the product.
+        </p>
+      </div>
+      <div class="cta-buttons">
+        <a href="dashboard.html" class="btn btn-primary" style="font-size: 16px; padding: 14px 32px;">Explore the Platform</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; padding-top: 60px; border-top: 1px solid var(--border); margin-top: 100px;">
+      <p style="font-size: 14px; color: var(--text-tertiary); margin-bottom: var(--space-sm); font-weight: 300;">
+        MUT Platform - 2026
+      </p>
+      <p style="font-size: 13px; color: var(--text-secondary); font-weight: 300;">
+        Made by <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 400;">Tyn Studio</a>
+      </p>
+      <p style="font-size: 11px; color: var(--text-tertiary); margin-top: 4px; font-style: italic; font-weight: 300;">
+        a calm studio for bold ideas
+      </p>
+    </div>
+  </div>
+</body>
+</html>

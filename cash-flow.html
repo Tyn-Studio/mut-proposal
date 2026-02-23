@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Flow Forecast - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item active">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Cash Flow Forecast</h1>
+        </div>
+        <div class="header-right">
+          <select class="input" style="width: 160px; padding: 6px 12px;">
+            <option>Next 3 months</option>
+            <option selected>Next 6 months</option>
+            <option>Next 12 months</option>
+          </select>
+          <button class="btn btn-secondary btn-small">
+            <span>📤</span>
+            <span>Export Report</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Summary Cards -->
+        <div class="stats-grid mb-xl">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💵</span>
+              <span>Projected Income (6 months)</span>
+            </div>
+            <div class="stat-value">$687,500</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Confirmed: <span class="text-success">$487,500</span><br>
+              Pending: <span class="text-warning">$200,000</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💳</span>
+              <span>Projected Expenses (6 months)</span>
+            </div>
+            <div class="stat-value">$412,000</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Fixed: <span>$240,000</span><br>
+              Project-based: <span>$172,000</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>📊</span>
+              <span>Net Cash Flow (6 months)</span>
+            </div>
+            <div class="stat-value text-success">+$275,500</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Best case: <span class="text-success">$412,000</span><br>
+              Conservative: <span class="text-warning">$198,000</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>🏦</span>
+              <span>Current Cash Position</span>
+            </div>
+            <div class="stat-value">$156,000</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Projected (6mo): <span class="text-success">$431,500</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario Selector -->
+        <div class="card mb-lg" style="padding: var(--space-md); background: var(--bg-tertiary);">
+          <div class="flex items-center justify-between">
+            <div>
+              <div style="font-weight: 600; margin-bottom: 4px;">Forecast Scenario</div>
+              <div class="text-secondary" style="font-size: 13px;">Adjust probability assumptions for pending projects</div>
+            </div>
+            <div class="flex items-center gap-md">
+              <button class="btn btn-ghost btn-small scenario-btn" data-scenario="conservative">Conservative (50%)</button>
+              <button class="btn btn-primary btn-small scenario-btn" data-scenario="realistic">Realistic (60%)</button>
+              <button class="btn btn-ghost btn-small scenario-btn" data-scenario="optimistic">Optimistic (80%)</button>
+              <button class="btn btn-ghost btn-small scenario-btn" data-scenario="custom">Custom</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Cash Flow Chart -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div>
+              <div class="card-title">6-Month Cash Flow Projection</div>
+              <div class="card-subtitle">Income vs. Expenses with net cash flow</div>
+            </div>
+            <div class="flex items-center gap-sm">
+              <label style="display: flex; align-items: center; gap: var(--space-sm); font-size: 13px; cursor: pointer;">
+                <input type="checkbox" checked style="width: 16px; height: 16px;">
+                <span>Show Pending Projects</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: var(--space-sm); font-size: 13px; cursor: pointer;">
+                <input type="checkbox" checked style="width: 16px; height: 16px;">
+                <span>Show Net Flow</span>
+              </label>
+            </div>
+          </div>
+          <div class="chart-container" id="cashflow-chart" style="height: 400px;"></div>
+        </div>
+
+        <!-- Upcoming Income & Expenses -->
+        <div class="grid-2 mb-xl">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Upcoming Income</div>
+                <div class="card-subtitle">Next 3 months</div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Source</th>
+                    <th>Project</th>
+                    <th>Amount</th>
+                    <th>Expected</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nike Inc.</td>
+                    <td>Campaign Final</td>
+                    <td><strong>$13,500</strong></td>
+                    <td>Mar 30</td>
+                    <td><span class="badge badge-success">Confirmed</span></td>
+                  </tr>
+                  <tr>
+                    <td>Adidas</td>
+                    <td>Product Launch</td>
+                    <td><strong>$19,200</strong></td>
+                    <td>Apr 15</td>
+                    <td><span class="badge badge-success">Confirmed</span></td>
+                  </tr>
+                  <tr>
+                    <td>Coca-Cola</td>
+                    <td>Social Media</td>
+                    <td><strong>$4,200</strong></td>
+                    <td>Mar 20</td>
+                    <td><span class="badge badge-success">Confirmed</span></td>
+                  </tr>
+                  <tr>
+                    <td>BMW</td>
+                    <td>Event Coverage</td>
+                    <td><strong>$26,000</strong></td>
+                    <td>Apr 10</td>
+                    <td><span class="badge badge-success">Confirmed</span></td>
+                  </tr>
+                  <tr style="opacity: 0.7;">
+                    <td>Sony</td>
+                    <td>Product Video</td>
+                    <td><strong>$37,500</strong></td>
+                    <td>May 1</td>
+                    <td><span class="badge badge-warning">Pending (60%)</span></td>
+                  </tr>
+                  <tr style="opacity: 0.7;">
+                    <td>Apple</td>
+                    <td>Store Opening</td>
+                    <td><strong>$62,500</strong></td>
+                    <td>May 15</td>
+                    <td><span class="badge badge-warning">Pending (60%)</span></td>
+                  </tr>
+                  <tr>
+                    <td>Equipment Rental</td>
+                    <td>Recurring</td>
+                    <td><strong>$8,500</strong></td>
+                    <td>Monthly</td>
+                    <td><span class="badge badge-accent">Recurring</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Upcoming Expenses</div>
+                <div class="card-subtitle">Next 3 months</div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Salaries & Payroll</td>
+                    <td>Operations</td>
+                    <td><strong>$45,000</strong></td>
+                    <td>Monthly</td>
+                    <td><span class="badge badge-accent">Recurring</span></td>
+                  </tr>
+                  <tr>
+                    <td>Office Rent</td>
+                    <td>Operations</td>
+                    <td><strong>$8,500</strong></td>
+                    <td>Monthly</td>
+                    <td><span class="badge badge-accent">Recurring</span></td>
+                  </tr>
+                  <tr>
+                    <td>Equipment Maintenance</td>
+                    <td>Operations</td>
+                    <td><strong>$3,200</strong></td>
+                    <td>Monthly</td>
+                    <td><span class="badge badge-accent">Recurring</span></td>
+                  </tr>
+                  <tr>
+                    <td>Software Subscriptions</td>
+                    <td>Operations</td>
+                    <td><strong>$2,800</strong></td>
+                    <td>Monthly</td>
+                    <td><span class="badge badge-accent">Recurring</span></td>
+                  </tr>
+                  <tr>
+                    <td>Nike Campaign Costs</td>
+                    <td>Production</td>
+                    <td><strong>$5,500</strong></td>
+                    <td>Mar 15</td>
+                    <td><span class="badge badge-neutral">Project</span></td>
+                  </tr>
+                  <tr>
+                    <td>Adidas Production</td>
+                    <td>Production</td>
+                    <td><strong>$12,800</strong></td>
+                    <td>Apr 10</td>
+                    <td><span class="badge badge-neutral">Project</span></td>
+                  </tr>
+                  <tr>
+                    <td>New Camera Equipment</td>
+                    <td>Capital</td>
+                    <td><strong>$18,000</strong></td>
+                    <td>Apr 1</td>
+                    <td><span class="badge badge-warning">One-time</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Breakdown -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Monthly Breakdown</div>
+              <div class="card-subtitle">Detailed cash flow by month</div>
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Confirmed Income</th>
+                  <th>Pending Income</th>
+                  <th>Total Income</th>
+                  <th>Expenses</th>
+                  <th>Net Cash Flow</th>
+                  <th>Cumulative</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>March 2026</strong></td>
+                  <td class="text-success">$89,200</td>
+                  <td class="text-secondary">$0</td>
+                  <td><strong>$89,200</strong></td>
+                  <td class="text-danger">$65,000</td>
+                  <td class="text-success"><strong>+$24,200</strong></td>
+                  <td>$180,200</td>
+                </tr>
+                <tr>
+                  <td><strong>April 2026</strong></td>
+                  <td class="text-success">$102,700</td>
+                  <td class="text-secondary">$0</td>
+                  <td><strong>$102,700</strong></td>
+                  <td class="text-danger">$90,500</td>
+                  <td class="text-success"><strong>+$12,200</strong></td>
+                  <td>$192,400</td>
+                </tr>
+                <tr style="opacity: 0.85;">
+                  <td><strong>May 2026</strong></td>
+                  <td class="text-success">$68,500</td>
+                  <td class="text-warning">$60,000</td>
+                  <td><strong>$128,500</strong></td>
+                  <td class="text-danger">$62,500</td>
+                  <td class="text-success"><strong>+$66,000</strong></td>
+                  <td>$258,400</td>
+                </tr>
+                <tr style="opacity: 0.85;">
+                  <td><strong>June 2026</strong></td>
+                  <td class="text-success">$95,000</td>
+                  <td class="text-warning">$42,000</td>
+                  <td><strong>$137,000</strong></td>
+                  <td class="text-danger">$68,000</td>
+                  <td class="text-success"><strong>+$69,000</strong></td>
+                  <td>$327,400</td>
+                </tr>
+                <tr style="opacity: 0.85;">
+                  <td><strong>July 2026</strong></td>
+                  <td class="text-success">$78,000</td>
+                  <td class="text-warning">$55,000</td>
+                  <td><strong>$133,000</strong></td>
+                  <td class="text-danger">$64,000</td>
+                  <td class="text-success"><strong>+$69,000</strong></td>
+                  <td>$396,400</td>
+                </tr>
+                <tr style="opacity: 0.85;">
+                  <td><strong>August 2026</strong></td>
+                  <td class="text-success">$54,100</td>
+                  <td class="text-warning">$43,000</td>
+                  <td><strong>$97,100</strong></td>
+                  <td class="text-danger">$62,000</td>
+                  <td class="text-success"><strong>+$35,100</strong></td>
+                  <td>$431,500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Cash Flow Forecast Chart
+    const baseData = [
+      { month: 'Mar', confirmedIncome: 89200, basePending: 0, expenses: 65000 },
+      { month: 'Apr', confirmedIncome: 102700, basePending: 0, expenses: 90500 },
+      { month: 'May', confirmedIncome: 68500, basePending: 100000, expenses: 62500 },
+      { month: 'Jun', confirmedIncome: 95000, basePending: 70000, expenses: 68000 },
+      { month: 'Jul', confirmedIncome: 78000, basePending: 92000, expenses: 64000 },
+      { month: 'Aug', confirmedIncome: 54100, basePending: 72000, expenses: 62000 }
+    ];
+
+    let currentScenario = 0.6; // Realistic by default
+    let cashFlowData = baseData.map(d => ({
+      ...d,
+      pendingIncome: d.basePending * currentScenario
+    }));
+
+    const margin = { top: 40, right: 100, bottom: 60, left: 80 };
+    const width = 1000 - margin.left - margin.right;
+    const height = 360 - margin.top - margin.bottom;
+
+    const svg = d3.select('#cashflow-chart')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', 400)
+      .attr('viewBox', `0 0 1000 400`)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleBand()
+      .domain(cashFlowData.map(d => d.month))
+      .range([0, width])
+      .padding(0.2);
+
+    const yMax = d3.max(baseData, d => d.confirmedIncome + d.basePending) * 1.2;
+    const y = d3.scaleLinear()
+      .domain([0, yMax])
+      .range([height, 0]);
+
+    // Tooltip
+    const tooltip = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('background', '#2a2a2a')
+      .style('border', '1px solid #333333')
+      .style('border-radius', '8px')
+      .style('padding', '12px')
+      .style('color', '#e6e6e6')
+      .style('font-size', '13px')
+      .style('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('z-index', 1000)
+      .style('box-shadow', '0 4px 6px rgba(0, 0, 0, 0.4)');
+
+    // X Axis
+    svg.append('g')
+      .attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(x))
+      .selectAll('text')
+      .style('fill', '#9b9b9b')
+      .style('font-size', '13px');
+
+    svg.selectAll('.domain, .tick line')
+      .style('stroke', '#333333');
+
+    // Y Axis
+    const yAxis = svg.append('g')
+      .call(d3.axisLeft(y).ticks(6).tickFormat(d => '$' + (d / 1000) + 'k'));
+
+    yAxis.selectAll('text')
+      .style('fill', '#9b9b9b')
+      .style('font-size', '12px');
+
+    // Grid lines
+    const gridLines = svg.selectAll('.grid-line')
+      .data(y.ticks(6))
+      .enter()
+      .append('line')
+      .attr('class', 'grid-line')
+      .attr('x1', 0)
+      .attr('x2', width)
+      .attr('y1', d => y(d))
+      .attr('y2', d => y(d))
+      .style('stroke', '#2a2a2a')
+      .style('stroke-width', 1)
+      .style('stroke-dasharray', '3,3');
+
+    // Create groups for bars (for easier updating)
+    const confirmedBars = svg.append('g').attr('class', 'confirmed-bars-group');
+    const pendingBars = svg.append('g').attr('class', 'pending-bars-group');
+    const expenseBars = svg.append('g').attr('class', 'expense-bars-group');
+    const netFlowGroup = svg.append('g').attr('class', 'net-flow-group');
+
+    // Function to draw/update chart
+    function updateChart(data) {
+      // Confirmed income bars
+      const confirmed = confirmedBars.selectAll('.bar-confirmed')
+        .data(data);
+
+      confirmed.enter()
+        .append('rect')
+        .attr('class', 'bar-confirmed')
+        .attr('x', d => x(d.month))
+        .attr('y', height)
+        .attr('width', x.bandwidth() / 3)
+        .attr('height', 0)
+        .attr('fill', '#10b981')
+        .attr('rx', 3)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .attr('fill', '#14d99d')
+            .attr('transform', 'translate(0, -2)');
+
+          tooltip.style('opacity', 1)
+            .html(`<strong>${d.month} Confirmed</strong><br/>$${d.confirmedIncome.toLocaleString()}<br/><span style="color: #9b9b9b">Guaranteed income</span>`);
+        })
+        .on('mousemove', event => {
+          tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+        })
+        .on('mouseleave', function() {
+          d3.select(this).transition().duration(200)
+            .attr('fill', '#10b981').attr('transform', 'translate(0, 0)');
+          tooltip.style('opacity', 0);
+        })
+        .merge(confirmed)
+        .transition()
+        .duration(600)
+        .attr('y', d => y(d.confirmedIncome))
+        .attr('height', d => height - y(d.confirmedIncome));
+
+      // Pending income bars
+      const pending = pendingBars.selectAll('.bar-pending')
+        .data(data);
+
+      pending.enter()
+        .append('rect')
+        .attr('class', 'bar-pending')
+        .attr('x', d => x(d.month))
+        .attr('y', height)
+        .attr('width', x.bandwidth() / 3)
+        .attr('height', 0)
+        .attr('fill', '#f59e0b')
+        .attr('opacity', 0.7)
+        .attr('rx', 3)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .attr('fill', '#ff9d00')
+            .attr('opacity', 0.85);
+
+          const probability = (currentScenario * 100).toFixed(0);
+          tooltip.style('opacity', 1)
+            .html(`<strong>${d.month} Pending</strong><br/>$${d.pendingIncome.toLocaleString()}<br/><span style="color: #9b9b9b">${probability}% probability</span>`);
+        })
+        .on('mousemove', event => {
+          tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+        })
+        .on('mouseleave', function() {
+          d3.select(this).transition().duration(200)
+            .attr('fill', '#f59e0b').attr('opacity', 0.7);
+          tooltip.style('opacity', 0);
+        })
+        .merge(pending)
+        .transition()
+        .duration(600)
+        .attr('y', d => y(d.confirmedIncome + d.pendingIncome))
+        .attr('height', d => height - y(d.pendingIncome));
+
+      // Expense bars
+      const expenses = expenseBars.selectAll('.bar-expense')
+        .data(data);
+
+      expenses.enter()
+        .append('rect')
+        .attr('class', 'bar-expense')
+        .attr('x', d => x(d.month) + (x.bandwidth() / 3) * 1.2)
+        .attr('y', height)
+        .attr('width', x.bandwidth() / 3)
+        .attr('height', 0)
+        .attr('fill', '#ef4444')
+        .attr('rx', 3)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .attr('fill', '#f56565')
+            .attr('transform', 'translate(0, -2)');
+
+          tooltip.style('opacity', 1)
+            .html(`<strong>${d.month} Expenses</strong><br/>$${d.expenses.toLocaleString()}<br/><span style="color: #9b9b9b">Net: $${(d.confirmedIncome + d.pendingIncome - d.expenses).toLocaleString()}</span>`);
+        })
+        .on('mousemove', event => {
+          tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+        })
+        .on('mouseleave', function() {
+          d3.select(this).transition().duration(200)
+            .attr('fill', '#ef4444').attr('transform', 'translate(0, 0)');
+          tooltip.style('opacity', 0);
+        })
+        .merge(expenses)
+        .transition()
+        .duration(600)
+        .attr('y', d => y(d.expenses))
+        .attr('height', d => height - y(d.expenses));
+
+      // Net flow line
+      const netFlowLine = d3.line()
+        .x(d => x(d.month) + x.bandwidth() / 2)
+        .y(d => y(d.confirmedIncome + d.pendingIncome - d.expenses))
+        .curve(d3.curveMonotoneX);
+
+      const path = netFlowGroup.selectAll('.net-flow-line')
+        .data([data]);
+
+      path.enter()
+        .append('path')
+        .attr('class', 'net-flow-line')
+        .attr('fill', 'none')
+        .attr('stroke', '#6366f1')
+        .attr('stroke-width', 3)
+        .merge(path)
+        .transition()
+        .duration(600)
+        .attr('d', netFlowLine);
+
+      // Net flow dots
+      const dots = netFlowGroup.selectAll('.net-dot')
+        .data(data);
+
+      dots.enter()
+        .append('circle')
+        .attr('class', 'net-dot')
+        .attr('r', 5)
+        .attr('fill', '#6366f1')
+        .attr('stroke', '#191919')
+        .attr('stroke-width', 2)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .attr('r', 7)
+            .attr('fill', '#7c7ef5');
+
+          const netFlow = d.confirmedIncome + d.pendingIncome - d.expenses;
+          tooltip.style('opacity', 1)
+            .html(`<strong>${d.month} Net Flow</strong><br/>$${netFlow.toLocaleString()}<br/><span style="color: ${netFlow > 0 ? '#10b981' : '#ef4444'}">Cash ${netFlow > 0 ? 'positive' : 'negative'}</span>`);
+        })
+        .on('mousemove', event => {
+          tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+        })
+        .on('mouseleave', function() {
+          d3.select(this).transition().duration(200)
+            .attr('r', 5).attr('fill', '#6366f1');
+          tooltip.style('opacity', 0);
+        })
+        .merge(dots)
+        .transition()
+        .duration(600)
+        .attr('cx', d => x(d.month) + x.bandwidth() / 2)
+        .attr('cy', d => y(d.confirmedIncome + d.pendingIncome - d.expenses));
+    }
+
+    // Legend
+    const legend = svg.append('g')
+      .attr('transform', `translate(${width - 180}, -20)`);
+
+    const legendItems = [
+      { label: 'Confirmed Income', color: '#10b981', y: 0 },
+      { label: 'Pending Income', color: '#f59e0b', y: 20 },
+      { label: 'Expenses', color: '#ef4444', y: 40 },
+      { label: 'Net Flow', color: '#6366f1', y: 60, isLine: true }
+    ];
+
+    legendItems.forEach(item => {
+      if (item.isLine) {
+        legend.append('line')
+          .attr('x1', 0)
+          .attr('x2', 20)
+          .attr('y1', item.y + 6)
+          .attr('y2', item.y + 6)
+          .style('stroke', item.color)
+          .style('stroke-width', 3);
+      } else {
+        legend.append('rect')
+          .attr('x', 0)
+          .attr('y', item.y)
+          .attr('width', 12)
+          .attr('height', 12)
+          .attr('fill', item.color)
+          .attr('rx', 2);
+      }
+
+      legend.append('text')
+        .attr('x', 24)
+        .attr('y', item.y + 10)
+        .text(item.label)
+        .style('fill', '#e6e6e6')
+        .style('font-size', '12px');
+    });
+
+    // Initial draw
+    updateChart(cashFlowData);
+
+    // Scenario button handlers
+    document.querySelectorAll('.scenario-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const scenario = this.dataset.scenario;
+
+        // Update button states
+        document.querySelectorAll('.scenario-btn').forEach(b => {
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-ghost');
+        });
+        this.classList.remove('btn-ghost');
+        this.classList.add('btn-primary');
+
+        // Update scenario
+        if (scenario === 'conservative') {
+          currentScenario = 0.5;
+        } else if (scenario === 'realistic') {
+          currentScenario = 0.6;
+        } else if (scenario === 'optimistic') {
+          currentScenario = 0.8;
+        } else if (scenario === 'custom') {
+          const custom = prompt('Enter probability (0-100):', '70');
+          if (custom) {
+            currentScenario = parseFloat(custom) / 100;
+          } else {
+            return;
+          }
+        }
+
+        // Recalculate data
+        cashFlowData = baseData.map(d => ({
+          ...d,
+          pendingIncome: d.basePending * currentScenario
+        }));
+
+        // Update chart
+        updateChart(cashFlowData);
+      });
+    });
+  </script>
+</body>
+</html>

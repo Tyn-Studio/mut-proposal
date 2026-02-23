@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clients - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item active">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Clients</h1>
+          <div class="text-secondary" style="font-size: 14px; margin-top: 4px;">Manage client relationships and analytics</div>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>📅</span>
+            <span>All Time</span>
+          </button>
+          <button class="btn btn-primary btn-small">
+            <span>+</span>
+            <span>Add Client</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Stats Grid -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>👥</span>
+              <span>Total Clients</span>
+            </div>
+            <div class="stat-value">42</div>
+            <div class="stat-change positive">
+              <span>↑ 3</span>
+              <span class="text-secondary">this quarter</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>⚠️</span>
+              <span>Inactive Clients</span>
+            </div>
+            <div class="stat-value">7</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              No projects in 6+ months
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>⭐</span>
+              <span>Top Client Value</span>
+            </div>
+            <div class="stat-value">$342K</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Nike (YTD)
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💰</span>
+              <span>Avg Project Value</span>
+            </div>
+            <div class="stat-value">$45.2K</div>
+            <div class="stat-change positive">
+              <span>↑ 12%</span>
+              <span class="text-secondary">vs last year</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client Analysis Grid -->
+        <div class="grid-2">
+          <!-- Revenue by Client -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Revenue Share by Client</div>
+              <button class="btn btn-ghost btn-small">
+                <span>⋯</span>
+              </button>
+            </div>
+            <div id="clientShareChart" style="width: 100%; height: 300px;"></div>
+            <div style="margin-top: var(--space-lg);">
+              <div style="display: grid; gap: var(--space-sm); font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); border-left: 3px solid #667eea; padding-left: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <span style="color: var(--text-secondary);">Nike</span>
+                  <span style="font-weight: 600; color: var(--text-primary);">$342K (28%)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); border-left: 3px solid #48bb78; padding-left: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <span style="color: var(--text-secondary);">Coca-Cola</span>
+                  <span style="font-weight: 600; color: var(--text-primary);">$268K (22%)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); border-left: 3px solid #ed8936; padding-left: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <span style="color: var(--text-secondary);">Apple</span>
+                  <span style="font-weight: 600; color: var(--text-primary);">$195K (16%)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); border-left: 3px solid #4299e1; padding-left: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <span style="color: var(--text-secondary);">Samsung</span>
+                  <span style="font-weight: 600; color: var(--text-primary);">$147K (12%)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); border-left: 3px solid #9b9b9b; padding-left: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <span style="color: var(--text-secondary);">Others</span>
+                  <span style="font-weight: 600; color: var(--text-primary);">$270K (22%)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Type Distribution -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Projects by Service Type</div>
+              <button class="btn btn-ghost btn-small">
+                <span>⋯</span>
+              </button>
+            </div>
+            <div id="serviceTypeChart" style="width: 100%; height: 300px;"></div>
+            <div style="margin-top: var(--space-lg);">
+              <div style="display: grid; gap: var(--space-sm); font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #667eea; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Commercial Production</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">35%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #48bb78; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Brand Video</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">28%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #ed8936; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Social Content</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">22%</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #4299e1; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Documentary</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">15%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inactive Clients Alert -->
+        <div class="card" style="background: var(--bg-tertiary); border-left: 4px solid var(--warning);">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="color: var(--warning);">⚠️</span>
+              <span>Inactive Clients (6+ months)</span>
+            </div>
+            <button class="btn btn-secondary btn-small">
+              <span>📧</span>
+              <span>Send Follow-up</span>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Last Project</th>
+                  <th>Total Projects</th>
+                  <th>Lifetime Value</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Ford Motors</div>
+                    <div class="text-secondary" style="font-size: 12px;">ford@email.com</div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">August 2025</div>
+                    <div class="text-secondary" style="font-size: 12px;">6 months ago</div>
+                  </td>
+                  <td>8 projects</td>
+                  <td style="font-weight: 600;">$287,500</td>
+                  <td><span class="badge badge-warning">Inactive</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Contact</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Pepsi</div>
+                    <div class="text-secondary" style="font-size: 12px;">pepsi@email.com</div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">July 2025</div>
+                    <div class="text-secondary" style="font-size: 12px;">7 months ago</div>
+                  </td>
+                  <td>12 projects</td>
+                  <td style="font-weight: 600;">$445,200</td>
+                  <td><span class="badge badge-warning">Inactive</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Contact</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Microsoft</div>
+                    <div class="text-secondary" style="font-size: 12px;">microsoft@email.com</div>
+                  </td>
+                  <td>
+                    <div style="color: var(--text-primary);">June 2025</div>
+                    <div class="text-secondary" style="font-size: 12px;">8 months ago</div>
+                  </td>
+                  <td>5 projects</td>
+                  <td style="font-weight: 600;">$178,900</td>
+                  <td><span class="badge badge-warning">Inactive</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Contact</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top Clients -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Top Clients by Revenue</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <button class="btn btn-secondary btn-small">
+                <span>📊</span>
+                <span>Export</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Client</th>
+                  <th>Active Projects</th>
+                  <th>Completed Projects</th>
+                  <th>Revenue (YTD)</th>
+                  <th>Avg Project Value</th>
+                  <th>Last Project</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600; color: var(--accent);">1</td>
+                  <td>
+                    <div style="font-weight: 600;">Nike</div>
+                    <div class="text-secondary" style="font-size: 12px;">Commercial Production</div>
+                  </td>
+                  <td>3</td>
+                  <td>9</td>
+                  <td style="font-weight: 600; color: var(--success);">$342,000</td>
+                  <td>$38,000</td>
+                  <td>
+                    <div>Feb 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Active</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: var(--accent);">2</td>
+                  <td>
+                    <div style="font-weight: 600;">Coca-Cola</div>
+                    <div class="text-secondary" style="font-size: 12px;">Brand Video</div>
+                  </td>
+                  <td>2</td>
+                  <td>11</td>
+                  <td style="font-weight: 600; color: var(--success);">$268,000</td>
+                  <td>$24,400</td>
+                  <td>
+                    <div>Jan 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Active</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: var(--accent);">3</td>
+                  <td>
+                    <div style="font-weight: 600;">Apple</div>
+                    <div class="text-secondary" style="font-size: 12px;">Commercial Production</div>
+                  </td>
+                  <td>1</td>
+                  <td>4</td>
+                  <td style="font-weight: 600; color: var(--success);">$195,000</td>
+                  <td>$48,750</td>
+                  <td>
+                    <div>Feb 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Active</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: var(--accent);">4</td>
+                  <td>
+                    <div style="font-weight: 600;">Samsung</div>
+                    <div class="text-secondary" style="font-size: 12px;">Social Content</div>
+                  </td>
+                  <td>4</td>
+                  <td>8</td>
+                  <td style="font-weight: 600; color: var(--success);">$147,000</td>
+                  <td>$18,375</td>
+                  <td>
+                    <div>Feb 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Active</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600; color: var(--accent);">5</td>
+                  <td>
+                    <div style="font-weight: 600;">Amazon</div>
+                    <div class="text-secondary" style="font-size: 12px;">Documentary</div>
+                  </td>
+                  <td>1</td>
+                  <td>6</td>
+                  <td style="font-weight: 600; color: var(--success);">$132,500</td>
+                  <td>$26,500</td>
+                  <td>
+                    <div>Jan 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Active</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">6</td>
+                  <td>
+                    <div style="font-weight: 600;">Adidas</div>
+                    <div class="text-secondary" style="font-size: 12px;">Brand Video</div>
+                  </td>
+                  <td>2</td>
+                  <td>7</td>
+                  <td style="font-weight: 600;">$118,900</td>
+                  <td>$17,000</td>
+                  <td>
+                    <div>Feb 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Active</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- All Clients -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">All Clients</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <input type="text" placeholder="Search clients..." class="form-input" style="width: 250px;">
+              <button class="btn btn-secondary btn-small">
+                <span>🔽</span>
+                <span>Filter</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Client Name</th>
+                  <th>Contact</th>
+                  <th>Industry</th>
+                  <th>Projects</th>
+                  <th>Last Project</th>
+                  <th>Lifetime Value</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="cursor: pointer;">
+                  <td>
+                    <div style="font-weight: 600;">Nike</div>
+                    <div class="text-secondary" style="font-size: 12px;">nike.com</div>
+                  </td>
+                  <td>
+                    <div>Sarah Johnson</div>
+                    <div class="text-secondary" style="font-size: 12px;">sarah@nike.com</div>
+                  </td>
+                  <td>Sports & Apparel</td>
+                  <td>12 projects</td>
+                  <td>Feb 2026</td>
+                  <td style="font-weight: 600;">$342,000</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr style="cursor: pointer;">
+                  <td>
+                    <div style="font-weight: 600;">Coca-Cola</div>
+                    <div class="text-secondary" style="font-size: 12px;">coca-cola.com</div>
+                  </td>
+                  <td>
+                    <div>Michael Chen</div>
+                    <div class="text-secondary" style="font-size: 12px;">michael@coca-cola.com</div>
+                  </td>
+                  <td>Beverages</td>
+                  <td>13 projects</td>
+                  <td>Jan 2026</td>
+                  <td style="font-weight: 600;">$268,000</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr style="cursor: pointer;">
+                  <td>
+                    <div style="font-weight: 600;">Apple</div>
+                    <div class="text-secondary" style="font-size: 12px;">apple.com</div>
+                  </td>
+                  <td>
+                    <div>Emma Wilson</div>
+                    <div class="text-secondary" style="font-size: 12px;">emma@apple.com</div>
+                  </td>
+                  <td>Technology</td>
+                  <td>5 projects</td>
+                  <td>Feb 2026</td>
+                  <td style="font-weight: 600;">$195,000</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr style="cursor: pointer;">
+                  <td>
+                    <div style="font-weight: 600;">Ford Motors</div>
+                    <div class="text-secondary" style="font-size: 12px;">ford.com</div>
+                  </td>
+                  <td>
+                    <div>David Miller</div>
+                    <div class="text-secondary" style="font-size: 12px;">david@ford.com</div>
+                  </td>
+                  <td>Automotive</td>
+                  <td>8 projects</td>
+                  <td>Aug 2025</td>
+                  <td style="font-weight: 600;">$287,500</td>
+                  <td><span class="badge badge-warning">Inactive</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Client Share Donut Chart
+    (function() {
+      const data = [
+        { name: 'Nike', value: 342000, color: '#667eea' },
+        { name: 'Coca-Cola', value: 268000, color: '#48bb78' },
+        { name: 'Apple', value: 195000, color: '#ed8936' },
+        { name: 'Samsung', value: 147000, color: '#4299e1' },
+        { name: 'Others', value: 270000, color: '#9b9b9b' }
+      ];
+
+      const width = 300;
+      const height = 300;
+      const radius = Math.min(width, height) / 2;
+
+      const svg = d3.select('#clientShareChart')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .append('g')
+        .attr('transform', `translate(${width/2}, ${height/2})`);
+
+      const pie = d3.pie()
+        .value(d => d.value)
+        .sort(null);
+
+      const arc = d3.arc()
+        .innerRadius(radius * 0.6)
+        .outerRadius(radius * 0.85);
+
+      const arcs = svg.selectAll('.arc')
+        .data(pie(data))
+        .enter()
+        .append('g')
+        .attr('class', 'arc');
+
+      arcs.append('path')
+        .attr('d', arc)
+        .attr('fill', d => d.data.color)
+        .attr('stroke', '#1a1a1a')
+        .attr('stroke-width', 2)
+        .style('opacity', 0.9)
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .style('opacity', 1)
+            .attr('transform', function(d) {
+              const [x, y] = arc.centroid(d);
+              return `translate(${x * 0.1}, ${y * 0.1})`;
+            });
+        })
+        .on('mouseleave', function() {
+          d3.select(this)
+            .transition().duration(200)
+            .style('opacity', 0.9)
+            .attr('transform', 'translate(0, 0)');
+        });
+
+      // Center text
+      const total = data.reduce((sum, d) => sum + d.value, 0);
+      svg.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '-0.3em')
+        .style('font-size', '28px')
+        .style('font-weight', '300')
+        .style('fill', '#e6e6e6')
+        .text('$' + (total / 1000).toFixed(0) + 'K');
+
+      svg.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '1.2em')
+        .style('font-size', '13px')
+        .style('fill', '#9b9b9b')
+        .text('Total Revenue');
+    })();
+
+    // Service Type Bar Chart
+    (function() {
+      const data = [
+        { type: 'Commercial', value: 35, color: '#667eea' },
+        { type: 'Brand Video', value: 28, color: '#48bb78' },
+        { type: 'Social', value: 22, color: '#ed8936' },
+        { type: 'Documentary', value: 15, color: '#4299e1' }
+      ];
+
+      const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+      const width = 400;
+      const height = 300;
+
+      const svg = d3.select('#serviceTypeChart')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+      const chartWidth = width - margin.left - margin.right;
+      const chartHeight = height - margin.top - margin.bottom;
+
+      const x = d3.scaleBand()
+        .domain(data.map(d => d.type))
+        .range([0, chartWidth])
+        .padding(0.3);
+
+      const y = d3.scaleLinear()
+        .domain([0, 40])
+        .range([chartHeight, 0]);
+
+      // Bars
+      svg.selectAll('.bar')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar')
+        .attr('x', d => x(d.type))
+        .attr('y', d => y(d.value))
+        .attr('width', x.bandwidth())
+        .attr('height', d => chartHeight - y(d.value))
+        .attr('fill', d => d.color)
+        .attr('rx', 4)
+        .style('opacity', 0.9)
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .style('opacity', 1)
+            .attr('y', y(d.value) - 3)
+            .attr('height', chartHeight - y(d.value) + 3);
+        })
+        .on('mouseleave', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .style('opacity', 0.9)
+            .attr('y', y(d.value))
+            .attr('height', chartHeight - y(d.value));
+        });
+
+      // Value labels
+      svg.selectAll('.label')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('x', d => x(d.type) + x.bandwidth() / 2)
+        .attr('y', d => y(d.value) - 8)
+        .attr('text-anchor', 'middle')
+        .style('fill', '#e6e6e6')
+        .style('font-size', '14px')
+        .style('font-weight', '600')
+        .text(d => d.value + '%');
+
+      // X axis
+      svg.append('g')
+        .attr('transform', `translate(0, ${chartHeight})`)
+        .call(d3.axisBottom(x))
+        .selectAll('text')
+        .style('fill', '#9b9b9b')
+        .style('font-size', '12px');
+
+      svg.selectAll('.domain, .tick line').remove();
+    })();
+  </script>
+</body>
+</html>

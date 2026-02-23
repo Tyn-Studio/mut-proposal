@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nike Campaign 2026 - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item active">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <div style="margin-bottom: 4px;">
+            <div class="header-breadcrumb">
+              <a href="projects.html" style="color: var(--text-secondary); text-decoration: none;">Projects</a>
+              <span style="color: var(--text-tertiary);">/</span>
+              <span>Nike Campaign 2026</span>
+            </div>
+          </div>
+          <h1 class="header-title" style="font-size: 28px;">Nike Campaign 2026</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-ghost btn-small">
+            <span>📤</span>
+            <span>Export</span>
+          </button>
+          <button class="btn btn-secondary btn-small">
+            <span>✏️</span>
+            <span>Edit</span>
+          </button>
+          <button class="btn btn-ghost btn-small" style="padding: 4px 12px;">⋯</button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Project Overview -->
+        <div class="grid-2 mb-xl">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Project Information</div>
+            </div>
+            <div style="display: grid; gap: var(--space-lg);">
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Client</div>
+                <div style="font-size: 16px; font-weight: 500;">Nike Inc.</div>
+              </div>
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Service Type</div>
+                <div style="font-size: 16px;">Video Production</div>
+              </div>
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Status</div>
+                <div><span class="badge badge-accent" style="font-size: 13px;">In Progress</span></div>
+              </div>
+              <div class="grid-2">
+                <div>
+                  <div class="text-secondary mb-sm" style="font-size: 13px;">Start Date</div>
+                  <div>Jan 15, 2026</div>
+                </div>
+                <div>
+                  <div class="text-secondary mb-sm" style="font-size: 13px;">End Date</div>
+                  <div>Mar 30, 2026</div>
+                </div>
+              </div>
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Progress</div>
+                <div class="flex items-center gap-md">
+                  <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: 4px;">
+                    <div style="width: 65%; height: 100%; background: var(--accent); border-radius: 4px;"></div>
+                  </div>
+                  <span style="font-weight: 600;">65%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Financial Summary</div>
+            </div>
+            <div style="display: grid; gap: var(--space-lg);">
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Project Value</div>
+                <div style="font-size: 24px; font-weight: 600;">$45,000</div>
+              </div>
+              <div class="grid-2">
+                <div>
+                  <div class="text-secondary mb-sm" style="font-size: 13px;">Budgeted Cost</div>
+                  <div style="font-size: 18px; font-weight: 500;">$28,000</div>
+                </div>
+                <div>
+                  <div class="text-secondary mb-sm" style="font-size: 13px;">Actual Cost</div>
+                  <div style="font-size: 18px; font-weight: 500;">$28,500</div>
+                </div>
+              </div>
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Expected Profit</div>
+                <div style="font-size: 18px; font-weight: 600; color: var(--success);">$16,500</div>
+                <div class="text-secondary" style="font-size: 13px; margin-top: 4px;">
+                  Margin: <span class="text-success">36.7%</span>
+                  <span style="color: var(--text-tertiary);">(Target: 40%)</span>
+                </div>
+              </div>
+              <div>
+                <div class="text-secondary mb-sm" style="font-size: 13px;">Income Received</div>
+                <div class="flex items-center gap-md">
+                  <div style="flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: 4px;">
+                    <div style="width: 55.5%; height: 100%; background: var(--success); border-radius: 4px;"></div>
+                  </div>
+                  <span style="font-weight: 600;">$25,000</span>
+                </div>
+                <div class="text-secondary" style="font-size: 13px; margin-top: 4px;">
+                  $20,000 remaining
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="card mb-xl" style="padding: 0;">
+          <div style="border-bottom: 1px solid var(--border); padding: 0 var(--space-lg); display: flex; gap: var(--space-lg);">
+            <button class="btn btn-ghost" style="border-radius: 0; border-bottom: 2px solid var(--accent); color: var(--accent); padding: var(--space-md) 0;">
+              Income Schedule
+            </button>
+            <button class="btn btn-ghost" style="border-radius: 0; color: var(--text-secondary); padding: var(--space-md) 0;">
+              Budget Breakdown
+            </button>
+            <button class="btn btn-ghost" style="border-radius: 0; color: var(--text-secondary); padding: var(--space-md) 0;">
+              Actual Expenses
+            </button>
+            <button class="btn btn-ghost" style="border-radius: 0; color: var(--text-secondary); padding: var(--space-md) 0;">
+              Timeline
+            </button>
+          </div>
+
+          <!-- Income Schedule Tab Content -->
+          <div style="padding: var(--space-lg);">
+            <div class="flex items-center justify-between mb-lg">
+              <div>
+                <div class="card-title mb-0">Payment Milestones</div>
+                <div class="card-subtitle">Track expected and received payments</div>
+              </div>
+              <button class="btn btn-secondary btn-small">
+                <span>+</span>
+                <span>Add Milestone</span>
+              </button>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>Amount</th>
+                    <th>Expected Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Advance Payment (50%)</strong></td>
+                    <td>$22,500</td>
+                    <td>Jan 10, 2026</td>
+                    <td><span class="text-success">Jan 12, 2026</span></td>
+                    <td><span class="badge badge-success">Received</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">✓</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>First Review (20%)</strong></td>
+                    <td>$9,000</td>
+                    <td>Feb 15, 2026</td>
+                    <td><span class="text-success">Feb 14, 2026</span></td>
+                    <td><span class="badge badge-success">Received</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">✓</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Final Delivery (30%)</strong></td>
+                    <td>$13,500</td>
+                    <td>Mar 30, 2026</td>
+                    <td>-</td>
+                    <td><span class="badge badge-warning">Pending</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Payment Timeline Visualization -->
+            <div class="mt-md" style="background: var(--bg-tertiary); border-radius: var(--radius-md); padding: var(--space-lg);">
+              <div class="text-secondary mb-md" style="font-size: 13px;">Payment Timeline</div>
+              <div style="position: relative; height: 60px;">
+                <!-- Timeline bar -->
+                <div style="position: absolute; top: 30px; left: 0; right: 0; height: 4px; background: var(--border);"></div>
+
+                <!-- Milestone 1 -->
+                <div style="position: absolute; left: 0%; top: 0;">
+                  <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; border: 3px solid var(--bg-tertiary); position: relative; left: -6px; top: 24px;"></div>
+                  <div style="position: absolute; top: 45px; left: -40px; width: 100px; text-align: center;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--success);">$22,500</div>
+                    <div style="font-size: 11px; color: var(--text-tertiary);">Jan 12</div>
+                  </div>
+                </div>
+
+                <!-- Milestone 2 -->
+                <div style="position: absolute; left: 50%; top: 0;">
+                  <div style="width: 12px; height: 12px; background: var(--success); border-radius: 50%; border: 3px solid var(--bg-tertiary); position: relative; left: -6px; top: 24px;"></div>
+                  <div style="position: absolute; top: 45px; left: -40px; width: 100px; text-align: center;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--success);">$9,000</div>
+                    <div style="font-size: 11px; color: var(--text-tertiary);">Feb 14</div>
+                  </div>
+                </div>
+
+                <!-- Milestone 3 -->
+                <div style="position: absolute; left: 100%; top: 0;">
+                  <div style="width: 12px; height: 12px; background: var(--warning); border-radius: 50%; border: 3px solid var(--bg-tertiary); position: relative; left: -6px; top: 24px;"></div>
+                  <div style="position: absolute; top: 45px; left: -40px; width: 100px; text-align: center;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--warning);">$13,500</div>
+                    <div style="font-size: 11px; color: var(--text-tertiary);">Mar 30</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Budget vs Actual Comparison -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Budget vs Actual Spending</div>
+              <div class="card-subtitle">Cost breakdown by category</div>
+            </div>
+          </div>
+          <div class="chart-container" id="budget-chart"></div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Activity</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+            <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--success-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">💰</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; margin-bottom: 4px;">Payment Received</div>
+                <div class="text-secondary" style="font-size: 13px;">$9,000 payment received for "First Review" milestone</div>
+                <div class="text-tertiary" style="font-size: 12px; margin-top: 4px;">Feb 14, 2026 at 10:23 AM</div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">📝</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; margin-bottom: 4px;">Project Updated</div>
+                <div class="text-secondary" style="font-size: 13px;">Progress updated to 65% by Carlos Martinez</div>
+                <div class="text-tertiary" style="font-size: 12px; margin-top: 4px;">Feb 20, 2026 at 3:45 PM</div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--danger-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">💳</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; margin-bottom: 4px;">Expense Logged</div>
+                <div class="text-secondary" style="font-size: 13px;">$4,200 for equipment rental added to Post-Production</div>
+                <div class="text-tertiary" style="font-size: 12px; margin-top: 4px;">Feb 18, 2026 at 11:12 AM</div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--success-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">💰</div>
+              <div style="flex: 1;">
+                <div style="font-weight: 500; margin-bottom: 4px;">Payment Received</div>
+                <div class="text-secondary" style="font-size: 13px;">$22,500 advance payment received</div>
+                <div class="text-tertiary" style="font-size: 12px; margin-top: 4px;">Jan 12, 2026 at 2:15 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Budget vs Actual Chart
+    const budgetData = [
+      { category: 'Pre-Production', budgeted: 8000, actual: 7800 },
+      { category: 'Production', budgeted: 12000, actual: 12500 },
+      { category: 'Post-Production', budgeted: 6000, actual: 6200 },
+      { category: 'Equipment', budgeted: 2000, actual: 2000 }
+    ];
+
+    const margin = { top: 20, right: 80, bottom: 60, left: 60 };
+    const width = 900 - margin.left - margin.right;
+    const height = 280 - margin.top - margin.bottom;
+
+    const svg = d3.select('#budget-chart')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', 300)
+      .attr('viewBox', `0 0 900 300`)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    const x0 = d3.scaleBand()
+      .domain(budgetData.map(d => d.category))
+      .range([0, width])
+      .padding(0.2);
+
+    const x1 = d3.scaleBand()
+      .domain(['budgeted', 'actual'])
+      .range([0, x0.bandwidth()])
+      .padding(0.1);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(budgetData, d => Math.max(d.budgeted, d.actual)) * 1.2])
+      .range([height, 0]);
+
+    // Tooltip
+    const tooltip = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('background', '#2a2a2a')
+      .style('border', '1px solid #333333')
+      .style('border-radius', '8px')
+      .style('padding', '12px')
+      .style('color', '#e6e6e6')
+      .style('font-size', '13px')
+      .style('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('z-index', 1000)
+      .style('box-shadow', '0 4px 6px rgba(0, 0, 0, 0.4)');
+
+    // X Axis
+    svg.append('g')
+      .attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(x0))
+      .selectAll('text')
+      .style('fill', '#9b9b9b')
+      .style('font-size', '12px');
+
+    svg.selectAll('.domain, .tick line')
+      .style('stroke', '#333333');
+
+    // Y Axis
+    svg.append('g')
+      .call(d3.axisLeft(y).ticks(5).tickFormat(d => '$' + (d / 1000) + 'k'))
+      .selectAll('text')
+      .style('fill', '#9b9b9b')
+      .style('font-size', '12px');
+
+    // Budgeted bars
+    svg.selectAll('.bar-budgeted')
+      .data(budgetData)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar-budgeted')
+      .attr('x', d => x0(d.category) + x1('budgeted'))
+      .attr('y', height)
+      .attr('width', x1.bandwidth())
+      .attr('height', 0)
+      .attr('fill', '#6366f1')
+      .attr('rx', 3)
+      .style('cursor', 'pointer')
+      .on('mouseenter', function(event, d) {
+        d3.select(this)
+          .transition().duration(200)
+          .attr('fill', '#7c7ef5')
+          .attr('transform', 'translate(0, -2)');
+
+        tooltip.style('opacity', 1)
+          .html(`<strong>${d.category}</strong><br/>Budgeted: $${d.budgeted.toLocaleString()}<br/><span style="color: #9b9b9b">Initial estimate</span>`);
+      })
+      .on('mousemove', event => {
+        tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+      })
+      .on('mouseleave', function() {
+        d3.select(this).transition().duration(200)
+          .attr('fill', '#6366f1').attr('transform', 'translate(0, 0)');
+        tooltip.style('opacity', 0);
+      })
+      .transition()
+      .duration(800)
+      .delay((d, i) => i * 100)
+      .attr('y', d => y(d.budgeted))
+      .attr('height', d => height - y(d.budgeted));
+
+    // Actual bars
+    svg.selectAll('.bar-actual')
+      .data(budgetData)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar-actual')
+      .attr('x', d => x0(d.category) + x1('actual'))
+      .attr('y', height)
+      .attr('width', x1.bandwidth())
+      .attr('height', 0)
+      .attr('fill', d => d.actual > d.budgeted ? '#f59e0b' : '#10b981')
+      .attr('rx', 3)
+      .style('cursor', 'pointer')
+      .on('mouseenter', function(event, d) {
+        const isOver = d.actual > d.budgeted;
+        const diff = Math.abs(d.actual - d.budgeted);
+        const pct = ((diff / d.budgeted) * 100).toFixed(1);
+        const color = isOver ? '#ff9d00' : '#14d99d';
+
+        d3.select(this)
+          .transition().duration(200)
+          .attr('fill', color)
+          .attr('transform', 'translate(0, -2)');
+
+        tooltip.style('opacity', 1)
+          .html(`<strong>${d.category}</strong><br/>Actual: $${d.actual.toLocaleString()}<br/><span style="color: ${isOver ? '#f59e0b' : '#10b981'}">${isOver ? '↑' : '↓'} $${diff.toLocaleString()} (${pct}%)</span>`);
+      })
+      .on('mousemove', event => {
+        tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+      })
+      .on('mouseleave', function(event, d) {
+        d3.select(this).transition().duration(200)
+          .attr('fill', d.actual > d.budgeted ? '#f59e0b' : '#10b981')
+          .attr('transform', 'translate(0, 0)');
+        tooltip.style('opacity', 0);
+      })
+      .transition()
+      .duration(800)
+      .delay((d, i) => i * 100)
+      .attr('y', d => y(d.actual))
+      .attr('height', d => height - y(d.actual));
+
+    // Legend
+    const legend = svg.append('g')
+      .attr('transform', `translate(${width - 150}, 0)`);
+
+    legend.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 12)
+      .attr('height', 12)
+      .attr('fill', '#6366f1')
+      .attr('rx', 2);
+
+    legend.append('text')
+      .attr('x', 18)
+      .attr('y', 10)
+      .text('Budgeted')
+      .style('fill', '#e6e6e6')
+      .style('font-size', '12px');
+
+    legend.append('rect')
+      .attr('x', 80)
+      .attr('y', 0)
+      .attr('width', 12)
+      .attr('height', 12)
+      .attr('fill', '#10b981')
+      .attr('rx', 2);
+
+    legend.append('text')
+      .attr('x', 98)
+      .attr('y', 10)
+      .text('Actual')
+      .style('fill', '#e6e6e6')
+      .style('font-size', '12px');
+  </script>
+</body>
+</html>

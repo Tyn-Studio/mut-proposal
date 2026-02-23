@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recurring Expenses - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item active">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Recurring Expenses</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>⬇️</span>
+            <span>Export</span>
+          </button>
+          <button class="btn btn-primary btn-small" onclick="document.getElementById('add-expense-modal').style.display='flex'">
+            <span>+</span>
+            <span>Add Expense</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Summary Cards -->
+        <div class="stats-grid mb-xl">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💳</span>
+              <span>Total Monthly Expenses</span>
+            </div>
+            <div class="stat-value">$59,500</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Annual: <strong>$714,000</strong>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>👥</span>
+              <span>Salaries & Payroll</span>
+            </div>
+            <div class="stat-value">$45,000</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              <span class="text-warning">75.6%</span> of monthly expenses
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>🏢</span>
+              <span>Operations & Overhead</span>
+            </div>
+            <div class="stat-value">$11,700</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              <span>19.7%</span> of monthly expenses
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💻</span>
+              <span>Software & Tools</span>
+            </div>
+            <div class="stat-value">$2,800</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              <span>4.7%</span> of monthly expenses
+            </div>
+          </div>
+        </div>
+
+        <!-- Expense Breakdown Chart -->
+        <div class="grid-2 mb-xl">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Expense Distribution</div>
+                <div class="card-subtitle">By category</div>
+              </div>
+            </div>
+            <div class="chart-container" id="expense-chart"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Expenses by Area</div>
+                <div class="card-subtitle">Department allocation</div>
+              </div>
+            </div>
+            <div style="padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-lg);">
+              <div>
+                <div class="flex items-center justify-between mb-sm">
+                  <div style="font-weight: 500;">Production</div>
+                  <div style="font-weight: 600;">$20,000</div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 33.6%; background: #6366f1;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-sm">
+                  <div style="font-weight: 500;">Administration</div>
+                  <div style="font-weight: 600;">$13,300</div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 22.4%; background: #10b981;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-sm">
+                  <div style="font-weight: 500;">Creative Direction</div>
+                  <div style="font-weight: 600;">$15,000</div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 25.2%; background: #f59e0b;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-sm">
+                  <div style="font-weight: 500;">Marketing</div>
+                  <div style="font-weight: 600;">$10,000</div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 16.8%; background: #ef4444;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-sm">
+                  <div style="font-weight: 500;">CEO</div>
+                  <div style="font-weight: 600;">$1,200</div>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 2%; background: #8b5cf6;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="card mb-lg" style="padding: var(--space-md);">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-md">
+              <button class="btn btn-primary btn-small">All Expenses</button>
+              <button class="btn btn-ghost btn-small">Salaries</button>
+              <button class="btn btn-ghost btn-small">Operations</button>
+              <button class="btn btn-ghost btn-small">Software</button>
+              <button class="btn btn-ghost btn-small">Equipment</button>
+            </div>
+            <div class="flex items-center gap-sm">
+              <input type="text" class="input" placeholder="Search expenses..." style="width: 200px; padding: 6px 12px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Expenses Table -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">All Recurring Expenses</div>
+              <div class="card-subtitle">32 active recurring expenses</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Area</th>
+                  <th>Amount</th>
+                  <th>Frequency</th>
+                  <th>Next Payment</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Salaries - Production Team</strong></td>
+                  <td>Salaries</td>
+                  <td>Production</td>
+                  <td><strong>$20,000</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 1, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Salaries - Creative Direction</strong></td>
+                  <td>Salaries</td>
+                  <td>Creative Direction</td>
+                  <td><strong>$15,000</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 1, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Salaries - Marketing Team</strong></td>
+                  <td>Salaries</td>
+                  <td>Marketing</td>
+                  <td><strong>$10,000</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 1, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Office Rent</strong></td>
+                  <td>Operations</td>
+                  <td>Administration</td>
+                  <td><strong>$8,500</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 1, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Equipment Maintenance</strong></td>
+                  <td>Operations</td>
+                  <td>Production</td>
+                  <td><strong>$3,200</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 15, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Adobe Creative Cloud</strong></td>
+                  <td>Software</td>
+                  <td>Creative Direction</td>
+                  <td><strong>$1,200</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 5, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>DaVinci Resolve Studio</strong></td>
+                  <td>Software</td>
+                  <td>Production</td>
+                  <td><strong>$600</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 10, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Google Workspace</strong></td>
+                  <td>Software</td>
+                  <td>Administration</td>
+                  <td><strong>$360</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 8, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Frame.io</strong></td>
+                  <td>Software</td>
+                  <td>Production</td>
+                  <td><strong>$240</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 12, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Slack Business+</strong></td>
+                  <td>Software</td>
+                  <td>Administration</td>
+                  <td><strong>$180</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 6, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Epidemic Sound</strong></td>
+                  <td>Software</td>
+                  <td>Creative Direction</td>
+                  <td><strong>$220</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 7, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Internet & Phone</strong></td>
+                  <td>Operations</td>
+                  <td>Administration</td>
+                  <td><strong>$450</strong></td>
+                  <td>Monthly</td>
+                  <td>Mar 3, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td><strong>Equipment Insurance</strong></td>
+                  <td>Operations</td>
+                  <td>Production</td>
+                  <td><strong>$1,850</strong></td>
+                  <td>Quarterly</td>
+                  <td>Apr 1, 2026</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="opacity: 0.5;">
+                  <td><strong>Final Cut Pro (Old License)</strong></td>
+                  <td>Software</td>
+                  <td>Production</td>
+                  <td><strong>$450</strong></td>
+                  <td>Monthly</td>
+                  <td>-</td>
+                  <td><span class="badge badge-neutral">Inactive</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Expense Modal -->
+  <div id="add-expense-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); align-items: center; justify-content: center; z-index: 1000;">
+    <div class="card" style="width: 600px; max-width: 90vw; max-height: 90vh; overflow-y: auto;">
+      <div class="card-header">
+        <div class="card-title">Add Recurring Expense</div>
+        <button class="btn btn-ghost btn-small" onclick="document.getElementById('add-expense-modal').style.display='none'" style="padding: 4px 8px;">✕</button>
+      </div>
+
+      <form style="display: flex; flex-direction: column; gap: var(--space-lg);">
+        <div class="form-group">
+          <label class="form-label">Description *</label>
+          <input type="text" class="input" placeholder="e.g., Adobe Creative Cloud">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select class="input">
+              <option>Select category...</option>
+              <option>Salaries</option>
+              <option>Operations</option>
+              <option>Software</option>
+              <option>Equipment</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Area *</label>
+            <select class="input">
+              <option>Select area...</option>
+              <option>Production</option>
+              <option>Creative Direction</option>
+              <option>Marketing</option>
+              <option>Administration</option>
+              <option>CEO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Amount *</label>
+            <input type="number" class="input" placeholder="0.00">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Frequency *</label>
+            <select class="input">
+              <option>Monthly</option>
+              <option>Quarterly</option>
+              <option>Annually</option>
+              <option>Weekly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Start Date</label>
+          <input type="date" class="input">
+        </div>
+
+        <div class="form-group mb-0">
+          <label class="form-label">Notes</label>
+          <textarea class="input" rows="3" placeholder="Additional notes..."></textarea>
+        </div>
+
+        <div class="flex justify-between" style="padding-top: var(--space-md); border-top: 1px solid var(--border);">
+          <button type="button" class="btn btn-ghost" onclick="document.getElementById('add-expense-modal').style.display='none'">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Expense Distribution Donut Chart
+    const expenseData = [
+      { type: 'Salaries', value: 45000, color: '#6366f1' },
+      { type: 'Rent & Facilities', value: 8500, color: '#10b981' },
+      { type: 'Equipment', value: 3200, color: '#f59e0b' },
+      { type: 'Software', value: 2800, color: '#ef4444' }
+    ];
+
+    const total = expenseData.reduce((sum, d) => sum + d.value, 0);
+
+    const donutWidth = 500;
+    const donutHeight = 300;
+    const radius = Math.min(donutWidth, donutHeight) / 2 - 40;
+
+    const donutSvg = d3.select('#expense-chart')
+      .append('svg')
+      .attr('width', '100%')
+      .attr('height', 300)
+      .attr('viewBox', `0 0 ${donutWidth} ${donutHeight}`)
+      .append('g')
+      .attr('transform', `translate(${donutWidth / 2},${donutHeight / 2})`);
+
+    const pie = d3.pie()
+      .value(d => d.value)
+      .sort(null);
+
+    const arc = d3.arc()
+      .innerRadius(radius * 0.6)
+      .outerRadius(radius);
+
+    const arcHover = d3.arc()
+      .innerRadius(radius * 0.6)
+      .outerRadius(radius * 1.08);
+
+    // Tooltip
+    const tooltip = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('background', '#2a2a2a')
+      .style('border', '1px solid #333333')
+      .style('border-radius', '8px')
+      .style('padding', '12px')
+      .style('color', '#e6e6e6')
+      .style('font-size', '13px')
+      .style('pointer-events', 'none')
+      .style('opacity', 0)
+      .style('z-index', 1000)
+      .style('box-shadow', '0 4px 6px rgba(0, 0, 0, 0.4)');
+
+    const arcs = donutSvg.selectAll('arc')
+      .data(pie(expenseData))
+      .enter()
+      .append('g');
+
+    arcs.append('path')
+      .attr('d', arc)
+      .attr('fill', d => d.data.color)
+      .attr('stroke', '#191919')
+      .attr('stroke-width', 2)
+      .style('cursor', 'pointer')
+      .on('mouseenter', function(event, d) {
+        const pct = ((d.data.value / total) * 100).toFixed(1);
+
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('d', arcHover)
+          .attr('opacity', 0.9);
+
+        tooltip.style('opacity', 1)
+          .html(`<strong>${d.data.type}</strong><br/>$${d.data.value.toLocaleString()}/month<br/><span style="color: #9b9b9b">${pct}% of total expenses</span>`);
+      })
+      .on('mousemove', event => {
+        tooltip.style('left', (event.pageX + 15) + 'px').style('top', (event.pageY - 15) + 'px');
+      })
+      .on('mouseleave', function() {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('d', arc)
+          .attr('opacity', 1);
+
+        tooltip.style('opacity', 0);
+      })
+      .on('click', function(event, d) {
+        alert(`View ${d.data.type} details`);
+      })
+      .transition()
+      .duration(800)
+      .attrTween('d', function(d) {
+        const interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+        return function(t) {
+          return arc(interpolate(t));
+        };
+      });
+
+    // Center text - total
+    donutSvg.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('y', -10)
+      .style('font-size', '28px')
+      .style('font-weight', '600')
+      .style('fill', '#e6e6e6')
+      .text('$59,500');
+
+    donutSvg.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('y', 15)
+      .style('font-size', '13px')
+      .style('fill', '#9b9b9b')
+      .text('per month');
+
+    // Legend
+    const donutLegend = donutSvg.append('g')
+      .attr('transform', `translate(${radius + 40}, ${-radius + 20})`);
+
+    expenseData.forEach((d, i) => {
+      const legendRow = donutLegend.append('g')
+        .attr('transform', `translate(0, ${i * 30})`)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function() {
+          d3.select(this).select('text').style('fill', '#ffffff');
+        })
+        .on('mouseleave', function() {
+          d3.select(this).selectAll('text').style('fill', function() {
+            return d3.select(this).attr('class') === 'value' ? '#9b9b9b' : '#e6e6e6';
+          });
+        });
+
+      legendRow.append('rect')
+        .attr('width', 12)
+        .attr('height', 12)
+        .attr('fill', d.color)
+        .attr('rx', 2);
+
+      legendRow.append('text')
+        .attr('x', 18)
+        .attr('y', 10)
+        .text(d.type)
+        .style('fill', '#e6e6e6')
+        .style('font-size', '12px')
+        .style('transition', 'fill 0.2s');
+
+      legendRow.append('text')
+        .attr('class', 'value')
+        .attr('x', 18)
+        .attr('y', 24)
+        .text('$' + d.value.toLocaleString())
+        .style('fill', '#9b9b9b')
+        .style('font-size', '11px')
+        .style('transition', 'fill 0.2s');
+    });
+  </script>
+</body>
+</html>

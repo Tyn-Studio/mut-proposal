@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item active">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Projects</h1>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>⬇️</span>
+            <span>Export</span>
+          </button>
+          <a href="project-create.html" class="btn btn-primary btn-small">
+            <span>+</span>
+            <span>New Project</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Summary Cards -->
+        <div class="stats-grid mb-xl">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>🎬</span>
+              <span>Active Projects</span>
+            </div>
+            <div class="stat-value">12</div>
+            <div class="text-secondary" style="font-size: 14px; margin-top: 8px;">
+              Total value: <span class="text-success">$487,500</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>⏳</span>
+              <span>Pending Approval</span>
+            </div>
+            <div class="stat-value">6</div>
+            <div class="text-secondary" style="font-size: 14px; margin-top: 8px;">
+              Potential value: <span class="text-warning">$412,000</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>✅</span>
+              <span>Completed (This Year)</span>
+            </div>
+            <div class="stat-value">28</div>
+            <div class="text-secondary" style="font-size: 14px; margin-top: 8px;">
+              Total revenue: <span class="text-success">$1,245,000</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>📊</span>
+              <span>Average Profit Margin</span>
+            </div>
+            <div class="stat-value">42%</div>
+            <div class="stat-change positive">
+              <span>↑ 3.2%</span>
+              <span class="text-secondary">vs last year</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="card mb-lg" style="padding: var(--space-md);">
+          <div class="flex items-center gap-md">
+            <div style="flex: 1;">
+              <input type="text" class="input" placeholder="Search projects...">
+            </div>
+            <select class="input" style="width: 180px;">
+              <option>All Statuses</option>
+              <option>Proposal</option>
+              <option>Approved</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+            <select class="input" style="width: 180px;">
+              <option>All Service Types</option>
+              <option>Video Production</option>
+              <option>Advertising</option>
+              <option>Photography</option>
+              <option>Equipment Rental</option>
+            </select>
+            <select class="input" style="width: 180px;">
+              <option>All Clients</option>
+              <option>Nike</option>
+              <option>Adidas</option>
+              <option>Apple</option>
+              <option>Samsung</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">All Projects</div>
+              <div class="card-subtitle">46 total projects</div>
+            </div>
+            <div class="flex items-center gap-sm">
+              <button class="btn btn-ghost btn-small">
+                <span>↕️</span>
+                <span>Sort</span>
+              </button>
+              <button class="btn btn-ghost btn-small">
+                <span>🔍</span>
+                <span>Filter</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>Client</th>
+                  <th>Service Type</th>
+                  <th>Status</th>
+                  <th>Budget</th>
+                  <th>Actual Cost</th>
+                  <th>Profit</th>
+                  <th>Completion</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="cursor: pointer;" onclick="window.location.href='project-detail.html'">
+                  <td><strong>Nike Campaign 2026</strong></td>
+                  <td>Nike Inc.</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td>$45,000</td>
+                  <td>$28,500</td>
+                  <td class="text-success">$16,500</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 65%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">65%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Adidas Product Launch</strong></td>
+                  <td>Adidas</td>
+                  <td>Advertising</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td>$32,000</td>
+                  <td>$19,200</td>
+                  <td class="text-success">$12,800</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 40%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">40%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Coca-Cola Social Media</strong></td>
+                  <td>Coca-Cola</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td>$28,500</td>
+                  <td>$22,400</td>
+                  <td class="text-success">$6,100</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 85%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">85%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>BMW Event Coverage</strong></td>
+                  <td>BMW</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td>$52,000</td>
+                  <td>$12,400</td>
+                  <td class="text-success">$39,600</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 20%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">20%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Sony Product Video</strong></td>
+                  <td>Sony</td>
+                  <td>Advertising</td>
+                  <td><span class="badge badge-warning">Proposal</span></td>
+                  <td>$75,000</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Apple Store Opening</strong></td>
+                  <td>Apple</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-warning">Proposal</span></td>
+                  <td>$125,000</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Samsung Campaign</strong></td>
+                  <td>Samsung</td>
+                  <td>Photography</td>
+                  <td><span class="badge badge-warning">Proposal</span></td>
+                  <td>$68,000</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Netflix Series Promo</strong></td>
+                  <td>Netflix</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-warning">Proposal</span></td>
+                  <td>$92,000</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Zara Lookbook 2026</strong></td>
+                  <td>Zara</td>
+                  <td>Photography</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td>$38,000</td>
+                  <td>$22,100</td>
+                  <td class="text-success">$15,900</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 100%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">100%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Google Workspace Tour</strong></td>
+                  <td>Google</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td>$55,000</td>
+                  <td>$31,800</td>
+                  <td class="text-success">$23,200</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 100%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">100%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Tesla Model Launch</strong></td>
+                  <td>Tesla</td>
+                  <td>Video Production</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td>$95,000</td>
+                  <td>$52,400</td>
+                  <td class="text-success">$42,600</td>
+                  <td>
+                    <div class="flex items-center gap-sm">
+                      <div style="flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: 3px;">
+                        <div style="width: 100%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                      </div>
+                      <span class="text-secondary" style="font-size: 12px;">100%</span>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+
+                <tr style="cursor: pointer;">
+                  <td><strong>Microsoft Surface Ad</strong></td>
+                  <td>Microsoft</td>
+                  <td>Advertising</td>
+                  <td><span class="badge badge-danger">Cancelled</span></td>
+                  <td>$48,000</td>
+                  <td>$8,500</td>
+                  <td class="text-danger">-$8,500</td>
+                  <td>-</td>
+                  <td>
+                    <button class="btn btn-ghost btn-small" style="padding: 4px 8px;">⋯</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

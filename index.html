@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUT Financial Platform - Access</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #121212;
+      --bg-tertiary: #1a1a1a;
+      --text-primary: #e6e6e6;
+      --text-secondary: #9b9b9b;
+      --text-tertiary: #666666;
+      --accent: #667eea;
+      --border: #262626;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 400px;
+      width: 100%;
+      padding: var(--space-lg);
+    }
+
+    .access-card {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border);
+      padding: var(--space-xl);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: var(--space-lg);
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--text-primary);
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+    }
+
+    .input-group {
+      margin-bottom: var(--space-lg);
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: var(--space-md);
+      background: var(--bg-primary);
+      border: 2px solid var(--border);
+      color: var(--text-primary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="password"]:focus {
+      border-color: var(--accent);
+    }
+
+    .btn {
+      width: 100%;
+      padding: var(--space-md);
+      background: var(--accent);
+      color: white;
+      border: 2px solid var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .error-message {
+      display: none;
+      background: rgba(229, 62, 62, 0.1);
+      border: 2px solid #e53e3e;
+      color: #e53e3e;
+      padding: var(--space-md);
+      margin-top: var(--space-lg);
+      font-size: 14px;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .footer {
+      margin-top: var(--space-xl);
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    .footer a {
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="access-card">
+      <div class="logo">🔒</div>
+      <h1>MUT Financial Platform</h1>
+      <p class="subtitle">Enter password to access</p>
+
+      <form id="accessForm" onsubmit="return checkPassword(event)">
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="off"
+            placeholder="Enter password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn">Access Platform</button>
+
+        <div id="errorMessage" class="error-message">
+          Incorrect password. Please try again.
+        </div>
+      </form>
+    </div>
+
+    <div class="footer">
+      Made by<br>
+      <a href="https://tynstudio.com" target="_blank">Tyn Studio</a>
+    </div>
+  </div>
+
+  <script>
+    // Check if already authenticated
+    if (sessionStorage.getItem('mutAuth') === 'authenticated') {
+      window.location.href = 'home.html';
+    }
+
+    // SHA-256 hash of the correct password
+    const correctPasswordHash = '63bd88ef70aadc5990f321b7747a2d16d2bcb546eb64a496fade784e134b41fa';
+
+    // Function to hash password using SHA-256
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    }
+
+    async function checkPassword(event) {
+      event.preventDefault();
+
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      // Hash the entered password
+      const enteredPasswordHash = await hashPassword(password);
+
+      if (enteredPasswordHash === correctPasswordHash) {
+        // Store authentication in session storage
+        sessionStorage.setItem('mutAuth', 'authenticated');
+        // Redirect to home page
+        window.location.href = 'home.html';
+      } else {
+        // Show error message
+        errorMessage.classList.add('show');
+        // Clear password field
+        document.getElementById('password').value = '';
+        // Hide error after 3 seconds
+        setTimeout(() => {
+          errorMessage.classList.remove('show');
+        }, 3000);
+      }
+
+      return false;
+    }
+  </script>
+</body>
+</html>

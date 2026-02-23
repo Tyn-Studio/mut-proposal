@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personnel - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item active">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Personnel</h1>
+          <div class="text-secondary" style="font-size: 14px; margin-top: 4px;">Team and freelancer management</div>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>📅</span>
+            <span>February 2026</span>
+          </button>
+          <button class="btn btn-primary btn-small">
+            <span>+</span>
+            <span>Add Personnel</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Stats Grid -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>👥</span>
+              <span>Total Personnel</span>
+            </div>
+            <div class="stat-value">47</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              12 full-time, 35 freelancers
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>💰</span>
+              <span>Monthly Personnel Costs</span>
+            </div>
+            <div class="stat-value">$87.5K</div>
+            <div class="stat-change positive">
+              <span>↓ 5.2%</span>
+              <span class="text-secondary">vs last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>📅</span>
+              <span>Active on Projects</span>
+            </div>
+            <div class="stat-value">28</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              Across 12 active projects
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">
+              <span>⏳</span>
+              <span>Pending Payments</span>
+            </div>
+            <div class="stat-value">$34.2K</div>
+            <div class="text-secondary" style="font-size: 13px; margin-top: 8px;">
+              18 payments due this month
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div style="display: flex; gap: var(--space-md); border-bottom: 2px solid var(--border); margin-bottom: var(--space-xl);">
+          <button class="btn btn-ghost" style="border-bottom: 2px solid var(--accent); border-radius: 0; color: var(--accent);">
+            Overview
+          </button>
+          <button class="btn btn-ghost" style="border-radius: 0;">
+            Calendar
+          </button>
+          <button class="btn btn-ghost" style="border-radius: 0;">
+            Payments
+          </button>
+          <button class="btn btn-ghost" style="border-radius: 0;">
+            Costs by Project
+          </button>
+        </div>
+
+        <!-- Personnel Overview -->
+        <div class="grid-2">
+          <!-- Team Members -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Full-Time Team</div>
+              <button class="btn btn-secondary btn-small">
+                <span>+</span>
+                <span>Add Member</span>
+              </button>
+            </div>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Salary/Month</th>
+                    <th>Active Projects</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600;">Sarah Johnson</div>
+                      <div class="text-secondary" style="font-size: 12px;">sarah@mut.mx</div>
+                    </td>
+                    <td>Creative Director</td>
+                    <td style="font-weight: 600;">$8,500</td>
+                    <td>5 projects</td>
+                    <td><span class="badge badge-success">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600;">Michael Chen</div>
+                      <div class="text-secondary" style="font-size: 12px;">michael@mut.mx</div>
+                    </td>
+                    <td>Producer</td>
+                    <td style="font-weight: 600;">$7,200</td>
+                    <td>4 projects</td>
+                    <td><span class="badge badge-success">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600;">Emma Wilson</div>
+                      <div class="text-secondary" style="font-size: 12px;">emma@mut.mx</div>
+                    </td>
+                    <td>Editor</td>
+                    <td style="font-weight: 600;">$6,800</td>
+                    <td>6 projects</td>
+                    <td><span class="badge badge-success">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600;">David Miller</div>
+                      <div class="text-secondary" style="font-size: 12px;">david@mut.mx</div>
+                    </td>
+                    <td>Cinematographer</td>
+                    <td style="font-weight: 600;">$7,500</td>
+                    <td>3 projects</td>
+                    <td><span class="badge badge-success">Active</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Cost Distribution -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Personnel Costs by Type</div>
+            </div>
+            <div id="costChart" style="width: 100%; height: 280px;"></div>
+            <div style="margin-top: var(--space-lg);">
+              <div style="display: grid; gap: var(--space-sm); font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #667eea; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Full-Time Salaries</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">$42K (48%)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #48bb78; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Freelancers</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">$32.5K (37%)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: var(--space-sm); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                    <div style="width: 12px; height: 12px; background: #ed8936; border-radius: 2px;"></div>
+                    <span style="color: var(--text-secondary);">Benefits & Taxes</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--text-primary);">$13K (15%)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Freelancers -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Active Freelancers</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <input type="text" placeholder="Search freelancers..." class="form-input" style="width: 200px;">
+              <button class="btn btn-secondary btn-small">
+                <span>🔽</span>
+                <span>Filter</span>
+              </button>
+              <button class="btn btn-secondary btn-small">
+                <span>+</span>
+                <span>Add Freelancer</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Specialty</th>
+                  <th>Current Projects</th>
+                  <th>Rate</th>
+                  <th>Days This Month</th>
+                  <th>Cost This Month</th>
+                  <th>Next Payment</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Carlos Rodriguez</div>
+                    <div class="text-secondary" style="font-size: 12px;">carlos@email.com</div>
+                  </td>
+                  <td>Director of Photography</td>
+                  <td>
+                    <div>Spring Campaign 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Nike</div>
+                  </td>
+                  <td style="font-weight: 600;">$1,200/day</td>
+                  <td>8 days</td>
+                  <td style="font-weight: 600; color: var(--success);">$9,600</td>
+                  <td>
+                    <div>Feb 28</div>
+                    <div class="text-secondary" style="font-size: 12px;">$4,800</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Lisa Anderson</div>
+                    <div class="text-secondary" style="font-size: 12px;">lisa@email.com</div>
+                  </td>
+                  <td>Motion Graphics</td>
+                  <td>
+                    <div>iPhone 18 Commercial</div>
+                    <div class="text-secondary" style="font-size: 12px;">Apple</div>
+                  </td>
+                  <td style="font-weight: 600;">$850/day</td>
+                  <td>12 days</td>
+                  <td style="font-weight: 600; color: var(--success);">$10,200</td>
+                  <td>
+                    <div>Mar 5</div>
+                    <div class="text-secondary" style="font-size: 12px;">$5,100</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">James Taylor</div>
+                    <div class="text-secondary" style="font-size: 12px;">james@email.com</div>
+                  </td>
+                  <td>Sound Designer</td>
+                  <td>
+                    <div>Product Launch Video</div>
+                    <div class="text-secondary" style="font-size: 12px;">Coca-Cola</div>
+                  </td>
+                  <td style="font-weight: 600;">$650/day</td>
+                  <td>6 days</td>
+                  <td style="font-weight: 600; color: var(--success);">$3,900</td>
+                  <td>
+                    <div>Feb 26</div>
+                    <div class="text-secondary" style="font-size: 12px;">$3,900</div>
+                  </td>
+                  <td><span class="badge badge-warning">Payment Due</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Maria Garcia</div>
+                    <div class="text-secondary" style="font-size: 12px;">maria@email.com</div>
+                  </td>
+                  <td>Color Grading</td>
+                  <td>
+                    <div>Multiple Projects</div>
+                    <div class="text-secondary" style="font-size: 12px;">Nike, Samsung</div>
+                  </td>
+                  <td style="font-weight: 600;">$750/day</td>
+                  <td>10 days</td>
+                  <td style="font-weight: 600; color: var(--success);">$7,500</td>
+                  <td>
+                    <div>Mar 1</div>
+                    <div class="text-secondary" style="font-size: 12px;">$3,750</div>
+                  </td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Calendar View -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Personnel Calendar - February 2026</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <button class="btn btn-ghost btn-small">◄ January</button>
+              <button class="btn btn-secondary btn-small">Today</button>
+              <button class="btn btn-ghost btn-small">March ►</button>
+            </div>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div style="padding: var(--space-lg);">
+            <!-- Days Header -->
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: var(--space-md); text-align: center; font-weight: 600; color: var(--text-secondary); font-size: 13px;">
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+              <div>Sun</div>
+            </div>
+
+            <!-- Calendar Days -->
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;">
+              <!-- Week 1 -->
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">27</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">28</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">29</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">30</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">31</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">1</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px;">2</div>
+              </div>
+
+              <!-- Week 2 with activities -->
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">3</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--accent); border-radius: 2px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Carlos R.</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">4</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--accent); border-radius: 2px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Carlos R.</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--success); border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Lisa A.</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">5</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--success); border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Lisa A.</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">6</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--success); border-radius: 2px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Lisa A.</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--warning); border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">James T.</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 600;">7</div>
+                <div style="font-size: 10px; padding: 2px 4px; background: var(--warning); border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">James T.</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">8</div>
+              </div>
+              <div style="min-height: 80px; padding: var(--space-sm); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-tertiary);">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">9</div>
+              </div>
+
+              <!-- Abbreviated remaining weeks -->
+              <div style="grid-column: span 7; padding: var(--space-lg); text-align: center; color: var(--text-tertiary); font-size: 13px; border: 1px dashed var(--border); border-radius: var(--radius-sm);">
+                ... Calendar continues with full month view ...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Payments -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Upcoming Payments (Next 30 Days)</div>
+            <button class="btn btn-secondary btn-small">
+              <span>📊</span>
+              <span>Payment Schedule</span>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Due Date</th>
+                  <th>Personnel</th>
+                  <th>Type</th>
+                  <th>Project</th>
+                  <th>Period/Days</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: var(--danger-light);">
+                  <td>
+                    <div style="font-weight: 600; color: var(--danger);">Feb 26, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Due in 3 days</div>
+                  </td>
+                  <td style="font-weight: 600;">James Taylor</td>
+                  <td><span class="badge badge-accent">Freelancer</span></td>
+                  <td>Product Launch Video</td>
+                  <td>6 days</td>
+                  <td style="font-weight: 600; color: var(--danger);">$3,900</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-small">Pay Now</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Feb 28, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Due in 5 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Carlos Rodriguez</td>
+                  <td><span class="badge badge-accent">Freelancer</span></td>
+                  <td>Spring Campaign 2026</td>
+                  <td>4 days (1st payment)</td>
+                  <td style="font-weight: 600;">$4,800</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Schedule</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Feb 28, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Due in 5 days</div>
+                  </td>
+                  <td style="font-weight: 600;">All Full-Time Staff</td>
+                  <td><span class="badge badge-success">Salary</span></td>
+                  <td>-</td>
+                  <td>February 2026</td>
+                  <td style="font-weight: 600;">$42,000</td>
+                  <td><span class="badge badge-success">Scheduled</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">View</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Mar 1, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Due in 6 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Maria Garcia</td>
+                  <td><span class="badge badge-accent">Freelancer</span></td>
+                  <td>Multiple Projects</td>
+                  <td>5 days (1st payment)</td>
+                  <td style="font-weight: 600;">$3,750</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Schedule</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="font-weight: 600;">Mar 5, 2026</div>
+                    <div class="text-secondary" style="font-size: 12px;">Due in 10 days</div>
+                  </td>
+                  <td style="font-weight: 600;">Lisa Anderson</td>
+                  <td><span class="badge badge-accent">Freelancer</span></td>
+                  <td>iPhone 18 Commercial</td>
+                  <td>6 days (1st payment)</td>
+                  <td style="font-weight: 600;">$5,100</td>
+                  <td><span class="badge badge-warning">Pending</span></td>
+                  <td>
+                    <button class="btn btn-ghost btn-small">Schedule</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Costs by Project -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Personnel Costs by Project</div>
+            <button class="btn btn-secondary btn-small">
+              <span>📊</span>
+              <span>Export Report</span>
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Client</th>
+                  <th>Full-Time Allocation</th>
+                  <th>Freelancers</th>
+                  <th>Total Personnel Cost</th>
+                  <th>% of Project Budget</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600;">Spring Campaign 2026</td>
+                  <td>Nike</td>
+                  <td>$18,400 (3 members)</td>
+                  <td>$24,600 (2 freelancers)</td>
+                  <td style="font-weight: 600;">$43,000</td>
+                  <td>51% of $85K</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Product Launch Video</td>
+                  <td>Coca-Cola</td>
+                  <td>$12,200 (2 members)</td>
+                  <td>$8,900 (3 freelancers)</td>
+                  <td style="font-weight: 600;">$21,100</td>
+                  <td>44% of $48K</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">iPhone 18 Commercial</td>
+                  <td>Apple</td>
+                  <td>$22,800 (4 members)</td>
+                  <td>$38,200 (4 freelancers)</td>
+                  <td style="font-weight: 600;">$61,000</td>
+                  <td>64% of $95K</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Social Media Package</td>
+                  <td>Samsung</td>
+                  <td>$5,400 (2 members)</td>
+                  <td>$3,200 (1 freelancer)</td>
+                  <td style="font-weight: 600;">$8,600</td>
+                  <td>48% of $18K</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Personnel Cost Distribution Chart
+    (function() {
+      const data = [
+        { type: 'Salaries', value: 42000, color: '#667eea' },
+        { type: 'Freelancers', value: 32500, color: '#48bb78' },
+        { type: 'Benefits', value: 13000, color: '#ed8936' }
+      ];
+
+      const width = 300;
+      const height = 280;
+      const radius = Math.min(width, height) / 2;
+
+      const svg = d3.select('#costChart')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .append('g')
+        .attr('transform', `translate(${width/2}, ${height/2})`);
+
+      const pie = d3.pie()
+        .value(d => d.value)
+        .sort(null);
+
+      const arc = d3.arc()
+        .innerRadius(radius * 0.6)
+        .outerRadius(radius * 0.85);
+
+      const arcs = svg.selectAll('.arc')
+        .data(pie(data))
+        .enter()
+        .append('g')
+        .attr('class', 'arc');
+
+      arcs.append('path')
+        .attr('d', arc)
+        .attr('fill', d => d.data.color)
+        .attr('stroke', '#1a1a1a')
+        .attr('stroke-width', 2)
+        .style('opacity', 0.9)
+        .on('mouseenter', function(event, d) {
+          d3.select(this)
+            .transition().duration(200)
+            .style('opacity', 1);
+        })
+        .on('mouseleave', function() {
+          d3.select(this)
+            .transition().duration(200)
+            .style('opacity', 0.9);
+        });
+
+      // Center text
+      const total = data.reduce((sum, d) => sum + d.value, 0);
+      svg.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '-0.3em')
+        .style('font-size', '28px')
+        .style('font-weight', '300')
+        .style('fill', '#e6e6e6')
+        .text('$' + (total / 1000).toFixed(1) + 'K');
+
+      svg.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '1.2em')
+        .style('font-size', '13px')
+        .style('fill', '#9b9b9b')
+        .text('Total Costs');
+    })();
+  </script>
+</body>
+</html>

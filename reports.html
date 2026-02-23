@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item active">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <a href="home.html" style="font-size: 12px; color: var(--text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;">
+            <span>←</span>
+            <span>Back to Pitch</span>
+          </a>
+        </div>
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <h1 class="header-title">Reports</h1>
+          <div class="text-secondary" style="font-size: 14px; margin-top: 4px;">Financial reports and analytics</div>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-secondary btn-small">
+            <span>📅</span>
+            <span>2026 YTD</span>
+          </button>
+          <button class="btn btn-primary btn-small">
+            <span>📊</span>
+            <span>Generate Report</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Report Type Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
+          <div class="card" style="cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="display: flex; align-items: center; gap: var(--space-lg); padding: var(--space-md);">
+              <div style="width: 56px; height: 56px; background: var(--accent-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                📅
+              </div>
+              <div style="flex: 1;">
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">Monthly Reports</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">P&L, cash flow, income vs expenses</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--success)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="display: flex; align-items: center; gap: var(--space-lg); padding: var(--space-md);">
+              <div style="width: 56px; height: 56px; background: var(--success-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                👥
+              </div>
+              <div style="flex: 1;">
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">Client Reports</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">Revenue, profitability, project history</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--warning)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="display: flex; align-items: center; gap: var(--space-lg); padding: var(--space-md);">
+              <div style="width: 56px; height: 56px; background: var(--warning-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                🎬
+              </div>
+              <div style="flex: 1;">
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px; color: var(--text-primary);">Project Reports</div>
+                <div style="font-size: 13px; color: var(--text-secondary);">Budget vs actual, profitability analysis</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Report -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Monthly Financial Report</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <select class="form-input" style="width: 150px;">
+                <option>February 2026</option>
+                <option>January 2026</option>
+                <option>December 2025</option>
+                <option>November 2025</option>
+              </select>
+              <button class="btn btn-secondary btn-small">
+                <span>📊</span>
+                <span>Export PDF</span>
+              </button>
+              <button class="btn btn-secondary btn-small">
+                <span>📑</span>
+                <span>Export CSV</span>
+              </button>
+              <button class="btn btn-primary btn-small">
+                <span>💾</span>
+                <span>Export Raw Data</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Financial Summary -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); padding: var(--space-lg); background: var(--bg-tertiary); border-radius: var(--radius-md); margin-bottom: var(--space-xl);">
+            <div>
+              <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Total Revenue</div>
+              <div style="font-size: 28px; font-weight: 600; color: var(--success);">$124,500</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); margin-top: 4px;">+12.5% vs last month</div>
+            </div>
+            <div>
+              <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Total Expenses</div>
+              <div style="font-size: 28px; font-weight: 600; color: var(--danger);">$67,200</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); margin-top: 4px;">+8.3% vs last month</div>
+            </div>
+            <div>
+              <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Net Profit</div>
+              <div style="font-size: 28px; font-weight: 600; color: var(--accent);">$57,300</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); margin-top: 4px;">46% margin</div>
+            </div>
+            <div>
+              <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Projects Completed</div>
+              <div style="font-size: 28px; font-weight: 600; color: var(--text-primary);">8</div>
+              <div style="font-size: 12px; color: var(--text-tertiary); margin-top: 4px;">Avg value: $15.6K</div>
+            </div>
+          </div>
+
+          <!-- P&L Statement -->
+          <div style="margin-bottom: var(--space-xl);">
+            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: var(--space-lg); color: var(--text-primary);">Profit & Loss Statement</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th style="text-align: right;">Amount</th>
+                  <th style="text-align: right;">% of Revenue</th>
+                  <th style="text-align: right;">vs Last Month</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: var(--success-light);">
+                  <td style="font-weight: 600;">REVENUE</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">$124,500</td>
+                  <td style="text-align: right;">100%</td>
+                  <td style="text-align: right; color: var(--success);">+12.5%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Project Revenue</td>
+                  <td style="text-align: right;">$112,000</td>
+                  <td style="text-align: right;">90%</td>
+                  <td style="text-align: right; color: var(--success);">+15.2%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Equipment Rental</td>
+                  <td style="text-align: right;">$12,500</td>
+                  <td style="text-align: right;">10%</td>
+                  <td style="text-align: right; color: var(--success);">+5.0%</td>
+                </tr>
+                <tr style="background: var(--danger-light); margin-top: var(--space-md);">
+                  <td style="font-weight: 600;">EXPENSES</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--danger);">$67,200</td>
+                  <td style="text-align: right;">54%</td>
+                  <td style="text-align: right; color: var(--danger);">+8.3%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Salaries & Wages</td>
+                  <td style="text-align: right;">$35,000</td>
+                  <td style="text-align: right;">28%</td>
+                  <td style="text-align: right;">0%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Production Costs</td>
+                  <td style="text-align: right;">$18,500</td>
+                  <td style="text-align: right;">15%</td>
+                  <td style="text-align: right; color: var(--danger);">+22.5%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Rent & Utilities</td>
+                  <td style="text-align: right;">$8,200</td>
+                  <td style="text-align: right;">7%</td>
+                  <td style="text-align: right;">0%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Software & Subscriptions</td>
+                  <td style="text-align: right;">$3,500</td>
+                  <td style="text-align: right;">3%</td>
+                  <td style="text-align: right; color: var(--success);">-5.4%</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: var(--space-xl);">Other Expenses</td>
+                  <td style="text-align: right;">$2,000</td>
+                  <td style="text-align: right;">2%</td>
+                  <td style="text-align: right; color: var(--danger);">+11.1%</td>
+                </tr>
+                <tr style="background: var(--accent-light); border-top: 2px solid var(--border);">
+                  <td style="font-weight: 600;">NET PROFIT</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--accent);">$57,300</td>
+                  <td style="text-align: right; font-weight: 600;">46%</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">+18.2%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Client Reports -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Client Revenue Report</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <select class="form-input" style="width: 150px;">
+                <option>2026 YTD</option>
+                <option>2025 Full Year</option>
+                <option>Q4 2025</option>
+                <option>Q3 2025</option>
+              </select>
+              <button class="btn btn-secondary btn-small">
+                <span>📊</span>
+                <span>Export PDF</span>
+              </button>
+              <button class="btn btn-primary btn-small">
+                <span>💾</span>
+                <span>Export Raw Data</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th style="text-align: right;">Projects</th>
+                  <th style="text-align: right;">Total Revenue</th>
+                  <th style="text-align: right;">Total Costs</th>
+                  <th style="text-align: right;">Profit</th>
+                  <th style="text-align: right;">Margin</th>
+                  <th style="text-align: right;">Avg Project Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600;">Nike</td>
+                  <td style="text-align: right;">12</td>
+                  <td style="text-align: right; color: var(--success);">$342,000</td>
+                  <td style="text-align: right; color: var(--danger);">$189,100</td>
+                  <td style="text-align: right; font-weight: 600;">$152,900</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">44.7%</td>
+                  <td style="text-align: right;">$28,500</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Coca-Cola</td>
+                  <td style="text-align: right;">13</td>
+                  <td style="text-align: right; color: var(--success);">$268,000</td>
+                  <td style="text-align: right; color: var(--danger);">$134,000</td>
+                  <td style="text-align: right; font-weight: 600;">$134,000</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">50.0%</td>
+                  <td style="text-align: right;">$20,615</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Apple</td>
+                  <td style="text-align: right;">5</td>
+                  <td style="text-align: right; color: var(--success);">$195,000</td>
+                  <td style="text-align: right; color: var(--danger);">$87,750</td>
+                  <td style="text-align: right; font-weight: 600;">$107,250</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">55.0%</td>
+                  <td style="text-align: right;">$39,000</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Samsung</td>
+                  <td style="text-align: right;">12</td>
+                  <td style="text-align: right; color: var(--success);">$147,000</td>
+                  <td style="text-align: right; color: var(--danger);">$82,320</td>
+                  <td style="text-align: right; font-weight: 600;">$64,680</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">44.0%</td>
+                  <td style="text-align: right;">$12,250</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Amazon</td>
+                  <td style="text-align: right;">7</td>
+                  <td style="text-align: right; color: var(--success);">$132,500</td>
+                  <td style="text-align: right; color: var(--danger);">$59,625</td>
+                  <td style="text-align: right; font-weight: 600;">$72,875</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">55.0%</td>
+                  <td style="text-align: right;">$18,929</td>
+                </tr>
+              </tbody>
+              <tfoot style="border-top: 2px solid var(--border); background: var(--bg-tertiary);">
+                <tr>
+                  <td style="font-weight: 600;">TOTAL</td>
+                  <td style="text-align: right; font-weight: 600;">49</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">$1,084,500</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--danger);">$552,795</td>
+                  <td style="text-align: right; font-weight: 600;">$531,705</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">49.0%</td>
+                  <td style="text-align: right; font-weight: 600;">$22,133</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Project Reports -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Project Profitability Report</div>
+            <div style="display: flex; gap: var(--space-sm);">
+              <select class="form-input" style="width: 150px;">
+                <option>All Projects</option>
+                <option>Completed Only</option>
+                <option>In Progress</option>
+                <option>By Client</option>
+              </select>
+              <button class="btn btn-secondary btn-small">
+                <span>📊</span>
+                <span>Export PDF</span>
+              </button>
+              <button class="btn btn-primary btn-small">
+                <span>💾</span>
+                <span>Export Raw Data</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>Client</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Budget</th>
+                  <th style="text-align: right;">Actual Cost</th>
+                  <th style="text-align: right;">Variance</th>
+                  <th style="text-align: right;">Revenue</th>
+                  <th style="text-align: right;">Profit</th>
+                  <th style="text-align: right;">Margin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600;">Spring Campaign 2026</td>
+                  <td>Nike</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td style="text-align: right;">$85,000</td>
+                  <td style="text-align: right;">$78,200</td>
+                  <td style="text-align: right; color: var(--success);">-$6,800 (8%)</td>
+                  <td style="text-align: right; color: var(--success);">$120,000</td>
+                  <td style="text-align: right; font-weight: 600;">$41,800</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">34.8%</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Product Launch Video</td>
+                  <td>Coca-Cola</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td style="text-align: right;">$48,000</td>
+                  <td style="text-align: right;">$52,100</td>
+                  <td style="text-align: right; color: var(--danger);">+$4,100 (9%)</td>
+                  <td style="text-align: right; color: var(--success);">$75,000</td>
+                  <td style="text-align: right; font-weight: 600;">$22,900</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--warning);">30.5%</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">iPhone 18 Commercial</td>
+                  <td>Apple</td>
+                  <td><span class="badge badge-accent">In Progress</span></td>
+                  <td style="text-align: right;">$95,000</td>
+                  <td style="text-align: right;">$87,500</td>
+                  <td style="text-align: right; color: var(--success);">-$7,500 (8%)</td>
+                  <td style="text-align: right; color: var(--success);">$145,000</td>
+                  <td style="text-align: right; font-weight: 600;">$57,500</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">39.7%</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Brand Refresh Campaign</td>
+                  <td>Nike</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td style="text-align: right;">$62,000</td>
+                  <td style="text-align: right;">$59,800</td>
+                  <td style="text-align: right; color: var(--success);">-$2,200 (4%)</td>
+                  <td style="text-align: right; color: var(--success);">$88,000</td>
+                  <td style="text-align: right; font-weight: 600;">$28,200</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">32.0%</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600;">Social Media Package</td>
+                  <td>Samsung</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td style="text-align: right;">$18,000</td>
+                  <td style="text-align: right;">$16,500</td>
+                  <td style="text-align: right; color: var(--success);">-$1,500 (8%)</td>
+                  <td style="text-align: right; color: var(--success);">$28,500</td>
+                  <td style="text-align: right; font-weight: 600;">$12,000</td>
+                  <td style="text-align: right; font-weight: 600; color: var(--success);">42.1%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Export Raw Data Info -->
+        <div class="card" style="background: var(--bg-tertiary); border-left: 4px solid var(--accent);">
+          <div style="padding: var(--space-lg);">
+            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: var(--space-md); color: var(--accent);">
+              📊 Export Raw Data
+            </h3>
+            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: var(--space-md); line-height: 1.6;">
+              Export complete datasets behind these reports for custom analysis. Includes transaction-level details, timestamps, categories, and all associated metadata.
+            </p>
+            <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-small">
+                <span>📑</span>
+                <span>CSV Format</span>
+              </button>
+              <button class="btn btn-secondary btn-small">
+                <span>📊</span>
+                <span>Excel Format</span>
+              </button>
+              <button class="btn btn-secondary btn-small">
+                <span>💾</span>
+                <span>JSON Format</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

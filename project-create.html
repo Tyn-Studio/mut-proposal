@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Project - MUT Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Check authentication
+    if (sessionStorage.getItem('mutAuth') !== 'authenticated') {
+      window.location.href = 'index.html';
+    }
+  </script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="../Mut.avif" alt="MUT Logo" class="logo">
+        <span class="logo-text">MUT Platform</span>
+      </div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a href="dashboard.html" class="nav-item">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="projects.html" class="nav-item active">
+            <span>🎬</span>
+            <span>Projects</span>
+          </a>
+          <a href="clients.html" class="nav-item">
+            <span>👥</span>
+            <span>Clients</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Financial</div>
+          <a href="cash-flow.html" class="nav-item">
+            <span>📈</span>
+            <span>Cash Flow</span>
+          </a>
+          <a href="income.html" class="nav-item">
+            <span>💰</span>
+            <span>Income</span>
+          </a>
+          <a href="recurring-expenses.html" class="nav-item">
+            <span>💳</span>
+            <span>Expenses</span>
+          </a>
+          <a href="reports.html" class="nav-item">
+            <span>📑</span>
+            <span>Reports</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a href="personnel.html" class="nav-item">
+            <span>👤</span>
+            <span>Personnel</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>🏢</span>
+            <span>Area Budgets</span>
+          </a>
+          <a href="#" class="nav-item">
+            <span>⚙️</span>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Footer Credit -->
+      <div style="margin-top: auto; padding-top: var(--space-lg); border-top: 2px solid var(--border);">
+        <div style="font-size: 11px; color: var(--text-tertiary); text-align: center;">
+          Made by<br>
+          <a href="https://tynstudio.com" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">Tyn Studio</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <div class="header-breadcrumb">
+            <a href="projects.html" style="color: var(--text-secondary); text-decoration: none;">Projects</a>
+            <span style="color: var(--text-tertiary);">/</span>
+            <span>New Project</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <a href="projects.html" class="btn btn-ghost btn-small">Cancel</a>
+          <button class="btn btn-primary btn-small">Save as Draft</button>
+          <button class="btn btn-primary btn-small">Submit for Approval</button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content" style="max-width: 1200px; margin: 0 auto;">
+        <!-- Progress Steps -->
+        <div class="card mb-xl" style="padding: var(--space-lg);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1; display: flex; align-items: center; gap: var(--space-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">1</div>
+              <span style="font-weight: 500;">Project Details</span>
+            </div>
+            <div style="width: 60px; height: 2px; background: var(--border);"></div>
+            <div style="flex: 1; display: flex; align-items: center; gap: var(--space-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 600; font-size: 14px;">2</div>
+              <span style="color: var(--text-secondary);">Budget Breakdown</span>
+            </div>
+            <div style="width: 60px; height: 2px; background: var(--border);"></div>
+            <div style="flex: 1; display: flex; align-items: center; gap: var(--space-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 600; font-size: 14px;">3</div>
+              <span style="color: var(--text-secondary);">Income Schedule</span>
+            </div>
+            <div style="width: 60px; height: 2px; background: var(--border);"></div>
+            <div style="flex: 1; display: flex; align-items: center; gap: var(--space-sm);">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-weight: 600; font-size: 14px;">4</div>
+              <span style="color: var(--text-secondary);">Review & Submit</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1: Project Details -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">Project Details</div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+            <div class="form-group">
+              <label class="form-label">Project Name *</label>
+              <input type="text" class="input" placeholder="e.g., Nike Campaign 2026" value="Puma Spring Collection 2026">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Client *</label>
+              <select class="input">
+                <option>Select a client...</option>
+                <option selected>Puma</option>
+                <option>Nike</option>
+                <option>Adidas</option>
+                <option>+ Add New Client</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Service Type *</label>
+              <select class="input">
+                <option>Select service type...</option>
+                <option selected>Video Production</option>
+                <option>Advertising</option>
+                <option>Photography</option>
+                <option>Equipment Rental</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Project Status *</label>
+              <select class="input">
+                <option selected>Proposal</option>
+                <option>Approved</option>
+                <option>In Progress</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Start Date</label>
+              <input type="date" class="input" value="2026-03-15">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">End Date</label>
+              <input type="date" class="input" value="2026-05-30">
+            </div>
+          </div>
+
+          <div class="form-group mb-0">
+            <label class="form-label">Description</label>
+            <textarea class="input" rows="4" placeholder="Brief description of the project scope and deliverables...">Complete video production for Puma's Spring 2026 collection launch, including 3 main promotional videos (60s, 30s, 15s), behind-the-scenes content, and social media cutdowns.</textarea>
+          </div>
+        </div>
+
+        <!-- Budget Builder -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">Budget Breakdown</div>
+            <div class="flex gap-sm">
+              <button class="btn btn-secondary btn-small">
+                <span>📋</span>
+                <span>Use Template</span>
+              </button>
+              <button class="btn btn-secondary btn-small">
+                <span>+</span>
+                <span>Add Category</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pre-Production Category -->
+          <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-lg); margin-bottom: var(--space-md);">
+            <div class="flex items-center justify-between mb-md">
+              <div class="flex items-center gap-md">
+                <h3 style="font-size: 16px; font-weight: 600;">Pre-Production</h3>
+                <span class="badge badge-neutral">4 items</span>
+              </div>
+              <div class="flex items-center gap-md">
+                <span style="font-size: 16px; font-weight: 600;">$12,500</span>
+                <button class="btn btn-ghost btn-small" style="padding: 4px;">▼</button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th style="width: 120px;">Quantity</th>
+                    <th style="width: 140px;">Unit Cost</th>
+                    <th style="width: 140px;">Total</th>
+                    <th style="width: 60px;"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" class="input" value="Script Development" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="1" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="3500" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$3,500</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Location Scouting" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="3" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="1200" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$3,600</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Casting & Talent Selection" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="1" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="2800" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$2,800</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Storyboard & Shot List" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="1" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="2600" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$2,600</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr style="background: transparent;">
+                    <td colspan="5">
+                      <button class="btn btn-ghost btn-small">+ Add Line Item</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Production Category -->
+          <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-lg); margin-bottom: var(--space-md);">
+            <div class="flex items-center justify-between mb-md">
+              <div class="flex items-center gap-md">
+                <h3 style="font-size: 16px; font-weight: 600;">Production</h3>
+                <span class="badge badge-neutral">5 items</span>
+              </div>
+              <div class="flex items-center gap-md">
+                <span style="font-size: 16px; font-weight: 600;">$38,000</span>
+                <button class="btn btn-ghost btn-small" style="padding: 4px;">▼</button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th style="width: 120px;">Quantity</th>
+                    <th style="width: 140px;">Unit Cost</th>
+                    <th style="width: 140px;">Total</th>
+                    <th style="width: 60px;"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" class="input" value="Director & Creative Team" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="5" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="2000" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$10,000</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Camera Equipment Rental" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="5" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="1800" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$9,000</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Talent & Models" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="6" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="1500" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$9,000</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Location Fees & Permits" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="3" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="2000" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$6,000</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" class="input" value="Crew & Support Staff" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="8" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td><input type="number" class="input" value="500" style="background: transparent; border: none; padding: 4px;"></td>
+                    <td style="font-weight: 600;">$4,000</td>
+                    <td><button class="btn btn-ghost btn-small" style="padding: 4px 8px;">🗑️</button></td>
+                  </tr>
+                  <tr style="background: transparent;">
+                    <td colspan="5">
+                      <button class="btn btn-ghost btn-small">+ Add Line Item</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Post-Production Category (Collapsed) -->
+          <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-md); margin-bottom: var(--space-md); cursor: pointer;">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-md">
+                <h3 style="font-size: 16px; font-weight: 600;">Post-Production</h3>
+                <span class="badge badge-neutral">4 items</span>
+              </div>
+              <div class="flex items-center gap-md">
+                <span style="font-size: 16px; font-weight: 600;">$22,500</span>
+                <button class="btn btn-ghost btn-small" style="padding: 4px;">▶</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Overhead (Collapsed) -->
+          <div style="border: 1px solid var(--border); border-radius: var(--radius-md); padding: var(--space-md); cursor: pointer;">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-md">
+                <h3 style="font-size: 16px; font-weight: 600;">Overhead & Contingency</h3>
+                <span class="badge badge-neutral">2 items</span>
+              </div>
+              <div class="flex items-center gap-md">
+                <span style="font-size: 16px; font-weight: 600;">$7,000</span>
+                <button class="btn btn-ghost btn-small" style="padding: 4px;">▶</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Budget Summary -->
+        <div class="card" style="background: var(--bg-tertiary); border: 2px solid var(--accent);">
+          <div class="grid-3">
+            <div>
+              <div class="text-secondary mb-sm" style="font-size: 13px;">Total Project Cost</div>
+              <div style="font-size: 28px; font-weight: 600;">$80,000</div>
+            </div>
+            <div>
+              <div class="text-secondary mb-sm" style="font-size: 13px;">Desired Profit Margin</div>
+              <div style="font-size: 28px; font-weight: 600; display: flex; align-items: center; gap: var(--space-sm);">
+                <input type="number" value="40" style="width: 80px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 8px; font-size: 28px; font-weight: 600; color: var(--text-primary);">
+                <span>%</span>
+              </div>
+            </div>
+            <div>
+              <div class="text-secondary mb-sm" style="font-size: 13px;">Client Quote</div>
+              <div style="font-size: 28px; font-weight: 600; color: var(--accent);">$112,000</div>
+              <div class="text-secondary" style="font-size: 13px;">Profit: $32,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
