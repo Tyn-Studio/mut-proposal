@@ -349,13 +349,185 @@
       line-height: 1.8;
       font-weight: 300;
     }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .pitch-container {
+        padding: var(--space-md);
+      }
+
+      .pitch-hero {
+        padding: 60px var(--space-md) 40px;
+        margin-bottom: 60px;
+      }
+
+      .pitch-hero h1 {
+        font-size: 36px;
+        letter-spacing: -1px;
+      }
+
+      .pitch-hero .subtitle {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .pitch-hero .tagline {
+        font-size: 13px;
+      }
+
+      .pitch-section {
+        margin-bottom: 60px;
+      }
+
+      .pitch-section-title {
+        font-size: 28px;
+      }
+
+      .pitch-section-subtitle {
+        font-size: 16px;
+      }
+
+      .simple-item {
+        padding: var(--space-lg);
+      }
+
+      .simple-item-title {
+        font-size: 18px;
+      }
+
+      .highlight-box {
+        padding: var(--space-lg);
+        margin-top: var(--space-xl);
+        margin-bottom: var(--space-xl);
+      }
+
+      .highlight-box h3 {
+        font-size: 22px;
+      }
+
+      .vision-box {
+        padding: var(--space-lg);
+      }
+
+      .vision-box h3 {
+        font-size: 22px;
+      }
+
+      .cta-section {
+        padding: var(--space-xl) var(--space-md);
+        margin-top: 60px;
+        margin-bottom: var(--space-xl);
+      }
+
+      .cta-section h2 {
+        font-size: 28px;
+      }
+
+      .cta-section p {
+        font-size: 15px;
+      }
+
+      .mockup-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .mockup-link {
+        padding: var(--space-lg);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pitch-container {
+        padding: var(--space-sm) var(--space-md);
+      }
+
+      .pitch-hero {
+        padding: 40px var(--space-sm) 30px;
+        margin-bottom: 40px;
+      }
+
+      .pitch-hero h1 {
+        font-size: 28px;
+        margin-bottom: var(--space-lg);
+      }
+
+      .pitch-hero .subtitle {
+        font-size: 14px;
+      }
+
+      .pitch-hero .tagline {
+        font-size: 12px;
+      }
+
+      .pitch-section {
+        margin-bottom: 40px;
+      }
+
+      .pitch-section-title {
+        font-size: 24px;
+      }
+
+      .pitch-section-subtitle {
+        font-size: 14px;
+      }
+
+      .simple-item {
+        padding: var(--space-md);
+      }
+
+      .simple-item-title {
+        font-size: 16px;
+      }
+
+      .simple-item-text {
+        font-size: 14px;
+      }
+
+      .highlight-box {
+        padding: var(--space-md);
+      }
+
+      .highlight-box h3 {
+        font-size: 20px;
+      }
+
+      .vision-box {
+        padding: var(--space-md);
+      }
+
+      .vision-box h3 {
+        font-size: 20px;
+      }
+
+      .cta-section {
+        padding: var(--space-lg) var(--space-sm);
+        margin-top: 40px;
+      }
+
+      .cta-section h2 {
+        font-size: 24px;
+      }
+
+      .cta-section p {
+        font-size: 14px;
+      }
+
+      .timeline-box {
+        padding-left: var(--space-lg);
+      }
+
+      .timeline-item:before {
+        left: calc(var(--space-lg) * -1 - 6px);
+      }
+    }
   </style>
 </head>
 <body style="background: var(--bg-primary);">
   <div class="pitch-container">
     <!-- Hero Section -->
     <div class="pitch-hero">
-      <img src="../Mut.avif" alt="MUT Logo" style="height: 50px; width: auto; max-width: 200px; object-fit: contain; margin-bottom: var(--space-xl); opacity: 0.9;">
+      <img src="../Mut.avif" alt="MUT Logo" style="height: 32px; width: auto; max-width: 150px; object-fit: contain; margin-bottom: var(--space-xl); opacity: 0.9;">
       <h1>Transform Your<br>Financial Management</h1>
       <p class="subtitle">A custom platform designed specifically for MUT's production workflows, budgets, and cash flow forecasting needs.</p>
       <div class="tagline" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">

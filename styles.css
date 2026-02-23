@@ -617,17 +617,179 @@ select.input {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .sidebar {
-    width: 200px;
+    width: 220px;
+  }
+
+  .header-title {
+    font-size: 20px;
+  }
+
+  .content {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: none;
+    border-right: none;
+    border-bottom: 2px solid var(--border);
+    padding: var(--space-md);
+  }
+
+  .logo-container {
+    margin-bottom: var(--space-md);
+  }
+
+  .nav-section {
+    margin-bottom: var(--space-md);
+  }
+
+  .header {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .header-breadcrumb {
+    font-size: 12px;
+  }
+
+  .content {
+    padding: var(--space-md);
   }
 
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 
   .grid-2,
   .grid-3 {
     grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .card {
+    padding: var(--space-md);
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  /* Make tables scrollable on mobile */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  th, td {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 13px;
+  }
+
+  .btn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 13px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .logo {
+    height: 16px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .nav-item {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 13px;
+    gap: var(--space-sm);
+  }
+
+  .header {
+    padding: var(--space-sm) var(--space-md);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .header-title {
+    font-size: 16px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .content {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .stats-grid {
+    gap: var(--space-sm);
+  }
+
+  .stat-card {
+    padding: var(--space-md);
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .card {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .card-title {
+    font-size: 14px;
+  }
+
+  .chart-container {
+    height: 200px;
+  }
+
+  table {
+    min-width: 500px;
+  }
+
+  th, td {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
+  }
+
+  .btn {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 12px;
   }
 }
